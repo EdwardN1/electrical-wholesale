@@ -14,7 +14,7 @@
 
         <div class="small-12 medium-12 large-12 cell">
             <nav role="navigation">
-				<?php joints_footer_links(); ?>
+				<?php //joints_footer_links(); ?>
             </nav>
         </div>
 
