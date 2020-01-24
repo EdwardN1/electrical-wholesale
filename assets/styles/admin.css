@@ -1,0 +1,4 @@
+.acf-table .acf-row:nth-child(odd) > .acf-row-handle.order {
+    background: #1468a0;
+    color: rgba(184, 255, 42, 0.09);
+}
