@@ -23,7 +23,7 @@ function Generatenav($params = array())
 
     $res = '';
 
-    if($name='The Main Menu') {
+    if($name=='The Main Menu') {
         ob_start();
         joints_top_nav();
         $res = ob_get_contents();
@@ -32,28 +32,28 @@ function Generatenav($params = array())
         error_log('menu - '.$res);
     }
 
-    if($name='The Secondary Menu') {
+    if($name=='The Secondary Menu') {
         ob_start();
         joints_secondary_nav();
         $res = ob_get_contents();
         ob_end_clean();
     }
 
-    if($name='The Off-Canvas Menu (Mobile)') {
+    if($name=='The Off-Canvas Menu (Mobile)') {
         ob_start();
         joints_off_canvas_nav();
         $res = ob_get_contents();
         ob_end_clean();
     }
 
-    if($name='Category Menu') {
+    if($name=='Category Menu') {
         ob_start();
         joints_category_menu();
         $res = ob_get_contents();
         ob_end_clean();
     }
 
-    if($name='Links Menu') {
+    if($name=='Links Menu') {
         ob_start();
         joints_links_menu();
         $res = ob_get_contents();
@@ -117,16 +117,16 @@ function Generateicon($params = array())
                             }
                             if($heading_position == 'Left') {
                                 if($includelink=='true') {
-                                    $res = '<div class="icon heading-left grid-x"><div class="cell auto icon-heading">'.$heading.'</div><div class="cell shrink">'.$iconLink.'</div></div>';
+                                    $res = '<div class="icon heading-left grid-x"><div class="cell shrink icon-heading">'.$heading.'</div><div class="cell shrink">'.$iconLink.'</div></div>';
                                 } else {
-                                    $res = '<div class="icon heading-left grid-x"><div class="cell auto icon-heading">'.$heading.'</div><div class="cell shrink">'.$iconSRC.'</div></div>';
+                                    $res = '<div class="icon heading-left grid-x"><div class="cell shrink icon-heading">'.$heading.'</div><div class="cell shrink">'.$iconSRC.'</div></div>';
                                 }
                             }
                             if($heading_position == 'Right') {
                                 if($includelink=='true') {
-                                    $res = '<div class="icon heading-right grid-x"><div class="cell shrink">'.$iconLink.'</div><div class="cell auto icon-heading">'.$heading.'</div></div>';
+                                    $res = '<div class="icon heading-right grid-x"><div class="cell shrink">'.$iconLink.'</div><div class="cell shrink icon-heading">'.$heading.'</div></div>';
                                 } else {
-                                    $res = '<div class="icon heading-right grid-x"><div class="cell shrink">'.$iconSRC.'</div><div class="cell auto icon-heading">'.$heading.'</div></div>';
+                                    $res = '<div class="icon heading-right grid-x"><div class="cell shrink">'.$iconSRC.'</div><div class="cell shrink icon-heading">'.$heading.'</div></div>';
                                 }
                             }
                         } else {
