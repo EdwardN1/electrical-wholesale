@@ -4,7 +4,7 @@
 font-family: 'Agan Regular';
 font-style: normal;
 font-weight: normal;
-src: local('Agan Regular'), url('Aganè 55 (roman).woff') format('woff');
+src: local('Agan Regular'), url('Agan-55-roman.woff') format('woff');
 }
 
 
@@ -12,7 +12,7 @@ src: local('Agan Regular'), url('Aganè 55 (roman).woff') format('woff');
 font-family: 'Agan Light';
 font-style: normal;
 font-weight: normal;
-src: local('Agan Light'), url('Aganè 45 (light).woff') format('woff');
+src: local('Agan Light'), url('Agan-45-light.woff') format('woff');
 }
 
 
@@ -20,7 +20,7 @@ src: local('Agan Light'), url('Aganè 45 (light).woff') format('woff');
 font-family: 'Agan Bold';
 font-style: normal;
 font-weight: normal;
-src: local('Agan Bold'), url('Aganè 65 (Bold).woff') format('woff');
+src: local('Agan Bold'), url('Agan-65-Bold.woff') format('woff');
 }
 
 
@@ -28,7 +28,7 @@ src: local('Agan Bold'), url('Aganè 65 (Bold).woff') format('woff');
 font-family: 'Agan Extra Bold';
 font-style: normal;
 font-weight: normal;
-src: local('Agan Extra Bold'), url('Aganè 75 (Extra Bold).woff') format('woff');
+src: local('Agan Extra Bold'), url('Agan-75-Extra-Bold.woff') format('woff');
 }
 
 
@@ -36,7 +36,7 @@ src: local('Agan Extra Bold'), url('Aganè 75 (Extra Bold).woff') format('woff')
 font-family: 'Agan S Regular';
 font-style: normal;
 font-weight: normal;
-src: local('Agan S Regular'), url('Aganè 55 (roman) sign.woff') format('woff');
+src: local('Agan S Regular'), url('Agan-55-roman-sign.woff') format('woff');
 }
 
 
@@ -44,7 +44,7 @@ src: local('Agan S Regular'), url('Aganè 55 (roman) sign.woff') format('woff');
 font-family: 'Agan S Bold';
 font-style: normal;
 font-weight: normal;
-src: local('Agan S Bold'), url('Aganè 65 (Bold) sign.woff') format('woff');
+src: local('Agan S Bold'), url('Agan-65-Bold-sign.woff') format('woff');
 }
 
 
@@ -52,5 +52,5 @@ src: local('Agan S Bold'), url('Aganè 65 (Bold) sign.woff') format('woff');
 font-family: 'Agan S Extra Bold';
 font-style: normal;
 font-weight: normal;
-src: local('Aganè S Extra Bold'), url('Aganè 75 (Extra Bold) sign.woff') format('woff');
+src: local('Aganè S Extra Bold'), url('Agan-75-Extra-Bold-sign.woff') format('woff');
 }

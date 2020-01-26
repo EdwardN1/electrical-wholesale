@@ -1,4 +1,3 @@
-
 <?php if ( have_rows( 'breakpoints', 'option' ) ) : ?>
     $breakpoints: (
 	<?php while ( have_rows( 'breakpoints', 'option' ) ) : the_row(); ?>
@@ -9,6 +8,4 @@
         xxlarge: <?php the_sub_field( 'xxlarge' ); ?>px,
 	<?php endwhile; ?>
     ) !default;
-<?php endif; ?>
-<?php
-//echo get_field( 'default_cssscss', 'option' );
+<?php endif;
