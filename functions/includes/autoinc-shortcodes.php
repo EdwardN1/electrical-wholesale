@@ -106,34 +106,35 @@ function Generateicon($params = array())
                         $heading = get_sub_field('heading');
                         $heading_position = get_sub_field('heading_position');
                         $iconSRC = '<img src="'.$iconURL.'" alt="'.$iconALT.'" class="icon-'.$name.'"/>';
-                        $iconLink = '<a href="'.$link.'">'.$iconSRC.'</a>';
+                        $iconLink = '<a href="'.$link.'" class="icon-link-'.$name.'">'.$iconSRC.'</a>';
+                        $heading_link = '<a href="'.$link.'" class="icon-heading-link">'.$heading.'</a>';
                         //error_log('$iconSRC = '.$iconSRC);
                        // error_log('$iconLink = '.$iconLink);
                         if($includeheading=='true'){
                             if($heading_position == 'top') {
                                 if($includelink=='true') {
-                                    $res = '<div class="icon heading-top"><div class="icon-heading">'.$heading.'</div><div>'.$iconLink.'</div></div>';
+                                    $res = '<div class="icon heading-top"><div class="icon-heading">'.$heading_link.'</div><div>'.$iconLink.'</div></div>';
                                 } else {
                                     $res = '<div class="icon heading-top"><div class="icon-heading">'.$heading.'</div><div>'.$iconSRC.'</div></div>';
                                 }
                             }
                             if($heading_position == 'Bottom') {
                                 if($includelink=='true') {
-                                    $res = '<div class="icon heading-bottom"><div>'.$iconLink.'</div><div class="icon-heading">'.$heading.'</div></div>';
+                                    $res = '<div class="icon heading-bottom"><div>'.$iconLink.'</div><div class="icon-heading">'.$heading_link.'</div></div>';
                                 } else {
                                     $res = '<div class="icon heading-bottom"><div>'.$iconSRC.'</div><div class="icon-heading">'.$heading.'</div></div>';
                                 }
                             }
                             if($heading_position == 'Left') {
                                 if($includelink=='true') {
-                                    $res = '<div class="icon heading-left grid-x"><div class="cell shrink icon-heading">'.$heading.'</div><div class="cell shrink">'.$iconLink.'</div></div>';
+                                    $res = '<div class="icon heading-left grid-x"><div class="cell shrink icon-heading">'.$heading_link.'</div><div class="cell shrink">'.$iconLink.'</div></div>';
                                 } else {
                                     $res = '<div class="icon heading-left grid-x"><div class="cell shrink icon-heading">'.$heading.'</div><div class="cell shrink">'.$iconSRC.'</div></div>';
                                 }
                             }
                             if($heading_position == 'Right') {
                                 if($includelink=='true') {
-                                    $res = '<div class="icon heading-right grid-x"><div class="cell shrink">'.$iconLink.'</div><div class="cell shrink icon-heading">'.$heading.'</div></div>';
+                                    $res = '<div class="icon heading-right grid-x"><div class="cell shrink">'.$iconLink.'</div><div class="cell shrink icon-heading">'.$heading_link.'</div></div>';
                                 } else {
                                     $res = '<div class="icon heading-right grid-x"><div class="cell shrink">'.$iconSRC.'</div><div class="cell shrink icon-heading">'.$heading.'</div></div>';
                                 }
