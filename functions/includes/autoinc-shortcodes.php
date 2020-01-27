@@ -1,6 +1,15 @@
 <?php
 add_shortcode('icon', 'Generateicon');
 add_shortcode('nav', 'Generatenav');
+add_shortcode('searchform', 'Generatesearchform');
+
+function Generatesearchform($params = array()) {
+	ob_start();
+	include get_template_directory().'/searchform.php';
+	$res = '<div class="searchform">'.ob_get_contents().'</div>';
+	ob_end_clean();
+	return $res;
+}
 
 function Generatenav($params = array())
 {
