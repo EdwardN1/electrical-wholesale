@@ -5,6 +5,15 @@ require_once get_template_directory() . '/functions/scssphp/scss.inc.php';
 
 use ScssPhp\ScssPhp\Compiler;
 
+define('INCLUDESSPATH', get_template_directory() . '/assets/styles/scss/includes/');
+define('DYNAMICPATH', get_template_directory() . '/assets/styles/scss/dynamic/');
+
+/**
+ * Includes - mixins and stuff that must be complied first.
+ */
+
+$glob_scss = '';
+
 function scss($scss)
 {
     $x_scss = new Compiler();
@@ -17,22 +26,19 @@ function scss($scss)
     }
 }
 
-define('INCLUDESSPATH', get_template_directory() . '/assets/styles/scss/includes/');
-define('DYNAMICPATH', get_template_directory() . '/assets/styles/scss/dynamic/');
-
-/**
- * Includes - mixins and stuff that must be complied first.
- */
 foreach (glob(INCLUDESSPATH . '_*.scss') as $filename) {
     $includes = '';
     ob_start();
-    include $filename . '.php';
-    $includes .= preg_replace('/\s+/S', " ", ob_get_contents());
+    if(file_exists($filename . '.php')) {
+        include $filename . '.php';
+        $includes .= preg_replace('/\s+/S', " ", ob_get_contents());
+    }
     ob_end_clean();
+    error_log('getting: '.$filename);
     $includes .= file_get_contents($filename);
     $scss = scss($includes);
     if ($scss) {
-        $css .= $scss;
+        $glob_scss .= $includes;
     }
 }
 
@@ -41,7 +47,7 @@ foreach (glob(INCLUDESSPATH . '_*.scss') as $filename) {
  * Custom Site Wide Styles
  */
 $default_cssscss = get_field('default_cssscss', 'option');
-$scss = scss($default_cssscss);
+$scss = scss($glob_scss.$default_cssscss);
 if ($scss) {
     $css .= $scss;
 }
@@ -56,7 +62,7 @@ foreach (glob(DYNAMICPATH . '_*.scss') as $filename) {
     $includes .= preg_replace('/\s+/S', " ", ob_get_contents());
     ob_end_clean();
     $includes .= file_get_contents($filename);
-    $scss = scss($includes);
+    $scss = scss($glob_scss.$includes);
     if ($scss) {
         $css .= $scss;
     }
@@ -106,7 +112,7 @@ if (have_rows('header_rows', 'option')) :
                             $test_container_css .= '.' . $container_name . ' {';
                             $test_container_css .= $container_css;
                             $test_container_css .= '}';
-                            $scss = scss($test_container_css);
+                            $scss = scss($glob_scss.$test_container_css);
                             if ($scss):
                                 $headerSCSS .= $test_container_css;
                             endif;
@@ -126,7 +132,7 @@ if (have_rows('header_rows', 'option')) :
             $test_row_css .= '.' . $row_name . ' {';
             $test_row_css .= $row_css;
             $test_row_css .= '}';
-            $scss = scss($test_row_css);
+            $scss = scss($glob_scss.$test_row_css);
             if ($scss):
                 $headerSCSS .= $row_css;
             endif;
@@ -134,7 +140,7 @@ if (have_rows('header_rows', 'option')) :
         $headerSCSS .= '}';
     endwhile;
     $headerSCSS .= '}';
-    $scss = scss($headerSCSS);
+    $scss = scss($glob_scss.$headerSCSS);
     if ($scss):
         $css .= $scss;
     endif;
@@ -186,7 +192,7 @@ if (have_rows('footer_rows', 'option')) :
                             $test_container_css .= '.' . $container_name . ' {';
                             $test_container_css .= $container_css;
                             $test_container_css .= '}';
-                            $scss = scss($test_container_css);
+                            $scss = scss($glob_scss.$test_container_css);
                             if ($scss):
                                 $footerSCSS .= $test_container_css;
                             endif;
@@ -206,7 +212,7 @@ if (have_rows('footer_rows', 'option')) :
             $test_row_css .= '.' . $row_name . ' {';
             $test_row_css .= $row_css;
             $test_row_css .= '}';
-            $scss = scss($test_row_css);
+            $scss = scss($glob_scss.$test_row_css);
             if ($scss):
                 $footerSCSS .= $row_css;
             endif;
@@ -214,7 +220,7 @@ if (have_rows('footer_rows', 'option')) :
         $footerSCSS .= '}';
     endwhile;
     $footerSCSS .= '}';
-    $scss = scss($footerSCSS);
+    $scss = scss($glob_scss.$footerSCSS);
     if ($scss):
         $css .= $scss;
     endif;

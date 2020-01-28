@@ -1,6 +1,6 @@
 <?php
 /*
-Template Name: Full Width (No Sidebar)
+Template Name: Full Width - Content fills to edge of page
 */
 
 get_header(); ?>

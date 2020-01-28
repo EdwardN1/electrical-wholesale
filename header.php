@@ -50,4 +50,3 @@
 					 <?php get_template_part( 'parts/nav', 'offcanvas-topbar' ); ?>
 	 	
 				</header> <!-- end .header -->
-                <div class="grid-container">
