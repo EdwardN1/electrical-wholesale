@@ -27,15 +27,23 @@ function compile_scss(){
 			$includes = file_get_contents( $filename );
 			$css     = scss( $includes );
 			if ( $css ) {
-                ini_set('display_errors', 'On');
+                /*ini_set('display_errors', 'On');
 				$cssFile = fopen($baseFile.'.css','w');
-				if(false === $css) {
+				if(false === $cssFile) {
 				    $res = 'Unable to open '.$baseFile.'.css for writing';
                 } else {
                     $bytes = fwrite($cssFile,$css);
                     fclose($cssFile);
-                    $res = 'Compile success. Output to: '.SCSSPATH.$baseFile.'.css '.$bytes.' bytes written';;
-                }
+                    $res = '<div>Compile success. Output to: '.SCSSPATH.$baseFile.'.css '.$bytes.' bytes written</div>';;
+                    $res .= '<div><pre>'.$css.'</pre></div>';
+                }*/
+				$bytes = file_put_contents($baseFile.'.css',$css);
+				if($bytes) {
+					$res = '<div>Compile success. Output to: '.SCSSPATH.$baseFile.'.css '.$bytes.' bytes written</div>';
+					$res .= '<div><pre>'.$css.'</pre></div>';
+				} else {
+					$res = 'Unable to open '.$baseFile.'.css for writing';
+				}
 			}
 		}
 	}

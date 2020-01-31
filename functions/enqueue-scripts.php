@@ -11,7 +11,7 @@ function site_scripts()
 
     // Register main stylesheet
 
-    wp_enqueue_style('site-css', get_template_directory_uri() . '/assets/styles/server/scss/style.css', 'font-css', filemtime(get_template_directory() . '/assets/styles/server/'), 'all');
+    wp_enqueue_style('site-css', get_template_directory_uri() . '/assets/styles/style.css', 'font-css', filemtime(get_template_directory() . '/assets/styles/style.css'), 'all');
 
 
     // Register dynamic stylesheet
