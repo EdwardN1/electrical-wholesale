@@ -18,7 +18,7 @@ foreach (glob(INCLUDESSPATH . '_*.scss') as $filename) {
         $includes .= preg_replace('/\s+/S', " ", ob_get_contents());
     }
     ob_end_clean();
-    error_log('getting: '.$filename);
+    //error_log('getting: '.$filename);
     $includes .= file_get_contents($filename);
     $scss = scss($includes);
     if ($scss) {

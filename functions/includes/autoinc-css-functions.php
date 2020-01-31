@@ -6,6 +6,7 @@ use ScssPhp\ScssPhp\Compiler;
 
 define('INCLUDESSPATH', get_template_directory() . '/assets/styles/scss/includes/');
 define('DYNAMICPATH', get_template_directory() . '/assets/styles/scss/dynamic/');
+//define('SCSSPATH', get_template_directory() . '/assets/styles/server/scss/');
 
 function cssName($string)
 {
@@ -23,6 +24,7 @@ function cssName($string)
 function scss($scss)
 {
 	$x_scss = new Compiler();
+    $x_scss->setImportPaths(get_template_directory() . '/assets/styles/server/scss/');
 	//$x_scss->setFormatter('ScssPhp\ScssPhp\Formatter\Crunched');
 	try {
 		return $x_scss->compile($scss);

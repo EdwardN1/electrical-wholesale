@@ -37,3 +37,12 @@ function compile_scss(){
 	exit;
 }
 
+add_action( 'save_post', 'save_post_and_compile', 10, 3 );
+
+function save_post_and_compile( $post_ID, $post, $update ) {
+    error_log('saving post.');
+    $scssResult = compile_scss();
+    error_log($scssResult);
+
+}
+
