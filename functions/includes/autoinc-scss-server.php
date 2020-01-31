@@ -1,5 +1,6 @@
 <?php
 add_action('wp_ajax_compile_scss', 'compile_scss');
+add_action('wp_ajax_nopriv_compile_scss', 'compile_scss');
 
 require_once get_template_directory() . '/functions/scssphp/scss.inc.php';
 use ScssPhp\ScssPhp\Compiler;
@@ -26,10 +27,15 @@ function compile_scss(){
 			$includes = file_get_contents( $filename );
 			$css     = scss( $includes );
 			if ( $css ) {
+                ini_set('display_errors', 'On');
 				$cssFile = fopen($baseFile.'.css','w');
-				fwrite($cssFile,$css);
-				fclose($cssFile);
-				$res = 'Compile success. Output to: '.SCSSPATH.$baseFile.'.css';;
+				if(false === $css) {
+				    $res = 'Unable to open '.$baseFile.'.css for writing';
+                } else {
+                    $bytes = fwrite($cssFile,$css);
+                    fclose($cssFile);
+                    $res = 'Compile success. Output to: '.SCSSPATH.$baseFile.'.css '.$bytes.' bytes written';;
+                }
 			}
 		}
 	}
