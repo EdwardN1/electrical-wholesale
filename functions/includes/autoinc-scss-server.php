@@ -37,7 +37,7 @@ function compile_scss(){
                     $res = '<div>Compile success. Output to: '.SCSSPATH.$baseFile.'.css '.$bytes.' bytes written</div>';;
                     $res .= '<div><pre>'.$css.'</pre></div>';
                 }*/
-				$bytes = file_put_contents($baseFile.'.css',$css);
+				$bytes = file_put_contents(SCSSPATH.$baseFile.'.css',$css);
 				if($bytes) {
 					$res = '<div>Compile success. Output to: '.SCSSPATH.$baseFile.'.css '.$bytes.' bytes written</div>';
 					$res .= '<div><pre>'.$css.'</pre></div>';
