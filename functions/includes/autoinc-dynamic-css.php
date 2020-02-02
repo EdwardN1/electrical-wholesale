@@ -5,5 +5,5 @@ function dynamic_css() {
     exit;
 }
 
-add_action('wp_ajax_dynamic_css', 'dynamic_css');
-add_action('wp_ajax_nopriv_dynamic_css', 'dynamic_css');
+//add_action('wp_ajax_dynamic_css', 'dynamic_css');
+//add_action('wp_ajax_nopriv_dynamic_css', 'dynamic_css');

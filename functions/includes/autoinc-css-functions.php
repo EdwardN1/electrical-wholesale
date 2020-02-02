@@ -33,3 +33,16 @@ function scss($scss)
 		return false;
 	}
 }
+
+function scss_crunched($scss)
+{
+	$x_scss = new Compiler();
+	$x_scss->setImportPaths(get_template_directory() . '/assets/styles/server/scss/');
+	$x_scss->setFormatter('ScssPhp\ScssPhp\Formatter\Crunched');
+	try {
+		return $x_scss->compile($scss);
+	} catch (Exception $e) {
+		error_log('Caught Exception: ' . $e->getMessage());
+		return false;
+	}
+}

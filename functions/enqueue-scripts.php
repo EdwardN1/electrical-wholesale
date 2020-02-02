@@ -11,12 +11,12 @@ function site_scripts()
 
     // Register main stylesheet
 
-    wp_enqueue_style('site-css', get_template_directory_uri() . '/assets/styles/style.css', 'font-css', filemtime(get_template_directory() . '/assets/styles/style.css'), 'all');
-
+    //wp_enqueue_style('site-css', get_template_directory_uri() . '/assets/styles/style.css', 'font-css', filemtime(get_template_directory() . '/assets/styles/style.css'), 'all');
+	wp_enqueue_style('site-css', get_template_directory_uri() . '/assets/styles/server/scss/style.css', 'font-css', filemtime(get_template_directory() . '/assets/styles/server/scss/style.css'), 'all');
 
     // Register dynamic stylesheet
-    wp_enqueue_style('dynamic-css', admin_url('admin-ajax.php') . '?action=dynamic_css', 'site-css', '1.0', 'all');
-    //wp_enqueue_style('dynamic-css', get_template_directory_uri().'/assets/styles/dynamic-css.php', 'site-css',  '1.0', 'all');
+    //wp_enqueue_style('dynamic-css', admin_url('admin-ajax.php') . '?action=dynamic_css', 'site-css', '1.0', 'all');
+
     // Comment reply script for threaded comments
     if (is_singular() AND comments_open() AND (get_option('thread_comments') == 1)) {
         wp_enqueue_script('comment-reply');
