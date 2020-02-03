@@ -18,6 +18,10 @@ jQuery(document).ready(function ($) {
         });
     });
 
-    $('[data-slick-slider]').slick();
+    let slickOpts = {
+        dots: true
+    };
+
+    $('[data-slick-slider]').slick(slickOpts);
 
 });

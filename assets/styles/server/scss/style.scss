@@ -66,5 +66,7 @@ CSS file.
 
 // Import your custom styles
 @import "global";
-@import "../posts/posts";
+@import "../slick/slick";
+@import "../slick/slick-theme";
 @import "../theme-settings/theme-settings";
+@import "../posts/posts";

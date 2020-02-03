@@ -78,19 +78,3 @@ function get_social_media($name)
     return $res;
 }
 
-add_action('acf/save_post', 'acf_save_post_processing', 20);
-
-function acf_save_post_processing() {
-	$screen = get_current_screen();
-	if(strpos($screen->id,'theme-general-settings')==true) {
-		$header = getHeaderSCSS();
-		$footer = getFooterSCSS();
-		$typography = getTypographySCSS();
-		$defaultSCSS = getDefaultSCSS();
-		file_put_contents(get_template_directory() . '/assets/styles/server/theme-settings/'.'_typography.scss',$typography);
-		file_put_contents(get_template_directory() . '/assets/styles/server/theme-settings/'.'_header.scss',$header);
-		file_put_contents(get_template_directory() . '/assets/styles/server/theme-settings/'.'_footer.scss',$footer);
-		file_put_contents(get_template_directory() . '/assets/styles/server/theme-settings/'.'_default.scss',$defaultSCSS);
-		update_css();
-	}
-}

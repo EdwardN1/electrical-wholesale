@@ -21,12 +21,13 @@
 	<?php else: ?>
 		<?php if ( have_rows( 'slides' ) ) : ?>
             <div data-slick-slider class="hero-slides">
+                <?php $slideCounter = 0; ?>
 				<?php while ( have_rows( 'slides' ) ) : the_row(); ?>
 					<?php $slide_image = get_sub_field( 'slide_image' ); ?>
 					<?php $slide_imageURL = $slide_image['url']; ?>
 					<?php $slide_imageALT = $slide_image['alt']; ?>
 					<?php if ( $slide_image ) { ?>
-                        <div class="hero-slide" style="background-image: url(<?php echo $slide_imageURL; ?>)">
+                        <div class="hero-slide slide-<?php echo $slideCounter;?>" style="background-image: url(<?php echo $slide_imageURL; ?>)">
                             <div class="hero-slide-description">
 								<?php $slide_title = get_sub_field( 'slide_title' ); ?>
 								<?php $slide_title_type = get_sub_field( 'slide_title_type' ); ?>
@@ -59,8 +60,9 @@
 								<?php endif; ?>
                             </div>
                         </div>
-					<?php } ?>
 
+					<?php } ?>
+                    <?php $slideCounter++;?>
 
 				<?php endwhile; ?>
             </div>
