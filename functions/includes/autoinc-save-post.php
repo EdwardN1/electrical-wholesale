@@ -51,7 +51,7 @@ function css_save_post($post_id, $post, $update)
     foreach ($blocks as $block) {
         if ($block['blockName'] == 'acf/acfgbcblockherosection') {
             $heroSection = $block['attrs']['data'];
-            $sliderID = $heroSection['id'];
+            $sliderID = cssName($heroSection['id']);
             $sliderSCSS = $heroSection['cssscss'];
             if($sliderSCSS!='') {
                 if($postSCSS=='') {
@@ -75,7 +75,25 @@ function css_save_post($post_id, $post, $update)
             if($postSCSS!='') {
                 $postSCSS .= '}'; //#sliderID
             }
-            error_log(print_r($block['attrs']['data'], true));
+            //error_log(print_r($block['attrs']['data'], true));
+        }
+
+        if ($block['blockName'] == 'acf/acfgbcblockimagegridlinks') {
+            $section = $block['attrs']['data'];
+            $sectionID = cssName($section['id']);
+            $sectionSCSS = $section['cssscss'];
+            if($sectionSCSS!='') {
+                if($postSCSS=='') {
+                    $postSCSS .= $z_postSCSS;
+                }
+                $postSCSS .= '#'.$sectionID.' {';
+                $postSCSS .= $sectionSCSS;
+            }
+
+            if($postSCSS!='') {
+                $postSCSS .= '}'; //#sliderID
+            }
+            //error_log(print_r($block['attrs']['data'], true));
         }
     }
 
