@@ -72,7 +72,7 @@ function css_save_post($post_id, $post, $update)
                     $postSCSS .= '}'; //.slide-number
                 }
             }
-            if($postSCSS!='') {
+            if($sliderSCSS!='') {
                 $postSCSS .= '}'; //#sliderID
             }
             //error_log(print_r($block['attrs']['data'], true));
@@ -90,10 +90,9 @@ function css_save_post($post_id, $post, $update)
                 $postSCSS .= $sectionSCSS;
             }
 
-            if($postSCSS!='') {
+            if($sectionSCSS!='') {
                 $postSCSS .= '}'; //#sliderID
             }
-            //error_log(print_r($block['attrs']['data'], true));
         }
     }
 
