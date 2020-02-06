@@ -8,7 +8,7 @@
     <div class="grid-x">
         <div class="cell auto">
             <label>
-                <input type="search" class="search-field" placeholder="<?php echo esc_attr_x('Search for items by name or reference', 'jointswp') ?>" value="<?php echo get_search_query() ?>" name="s"
+                <input type="search" class="search-field" placeholder="<?php echo esc_attr_x('Search for items', 'jointswp') ?>" value="<?php echo get_search_query() ?>" name="s"
                        title="<?php echo esc_attr_x('Search for:', 'jointswp') ?>"/>
             </label>
         </div>
