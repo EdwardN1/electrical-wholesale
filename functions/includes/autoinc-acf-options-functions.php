@@ -338,3 +338,8 @@ function getDefaultSCSS(){
     $defaultSCSS = get_field('default_cssscss','option');
 	return $defaultSCSS;
 }
+
+function getWooSCSS(){
+	$WooSCSS = get_field('woocommerce_cssscss','option');
+	return $WooSCSS;
+}
