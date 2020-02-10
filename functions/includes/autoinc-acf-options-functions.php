@@ -117,7 +117,7 @@ function getFooterSCSS() {
 			endif;
 			if ( have_rows( 'container_rows' ) ) :
 				while ( have_rows( 'container_rows' ) ) : the_row();
-					$container_row_name = get_sub_field( 'container_row_name' );
+					$container_row_name = cssName(get_sub_field( 'container_row_name' ));
 					$footerSCSS         .= '.' . $container_row_name . ' {';
 					if ( have_rows( 'container_columns' ) ) :
 						while ( have_rows( 'container_columns' ) ) : the_row();
