@@ -32,21 +32,57 @@ $wrapper_classes   = apply_filters( 'woocommerce_single_product_image_gallery_cl
 	'woocommerce-product-gallery--columns-' . absint( $columns ),
 	'images',
 ) );
+$imageList         = [];
+$attachment_ids    = $product->get_gallery_image_ids();
+if ( $product->get_image_id() ) {
+	$imageList[] = wp_get_attachment_url( $post_thumbnail_id );
+}
+foreach ( $attachment_ids as $attachment_id ) {
+	$imageList[] = wp_get_attachment_url( $attachment_id );
+}
 ?>
-<div class="<?php echo esc_attr( implode( ' ', array_map( 'sanitize_html_class', $wrapper_classes ) ) ); ?>" data-columns="<?php echo esc_attr( $columns ); ?>" style="opacity: 0; transition: opacity .25s ease-in-out;">
-	<figure class="woocommerce-product-gallery__wrapper">
+<div class="<?php echo esc_attr( implode( ' ', array_map( 'sanitize_html_class', $wrapper_classes ) ) ); ?>" data-columns="<?php echo esc_attr( $columns ); ?>"
+     style="opacity: 0; transition: opacity .25s ease-in-out;">
+    <figure class="woocommerce-product-gallery__wrapper">
 		<?php
-		if ( $product->get_image_id() ) {
-			$html = wc_get_gallery_image_html( $post_thumbnail_id, true );
-		} else {
-			$html  = '<div class="woocommerce-product-gallery__image--placeholder">';
+		if ( empty( $imageList ) ) {
+
+			$html = '<div class="woocommerce-product-gallery__image--placeholder">';
 			$html .= sprintf( '<img src="%s" alt="%s" class="wp-post-image" />', esc_url( wc_placeholder_img_src( 'woocommerce_single' ) ), esc_html__( 'Awaiting product image', 'woocommerce' ) );
 			$html .= '</div>';
+			echo apply_filters( 'woocommerce_single_product_image_thumbnail_html', $html, $post_thumbnail_id ); // phpcs:disable WordPress.XSS.EscapeOutput.OutputNotEscaped
+
+		} else {
+			?>
+            <div class="slick-product-gallery">
+				<?php
+				foreach ( $imageList as $image ) {
+					?>
+                    <div class="slick-product-slide">
+                        <a href="<?php echo $image; ?>">
+                            <img src="<?php echo $image; ?>" class="slick-product-image">
+                        </a>
+                    </div>
+					<?php
+				}
+				?>
+            </div>
+            <div class="slick-thumbnail-gallery">
+				<?php
+				foreach ( $imageList as $image ) {
+					?>
+                    <div class="slick-product-slide">
+
+                            <img src="<?php echo $image; ?>" class="slick-product-image">
+
+                    </div>
+					<?php
+				}
+				?>
+            </div>
+			<?php
 		}
-
-		echo apply_filters( 'woocommerce_single_product_image_thumbnail_html', $html, $post_thumbnail_id ); // phpcs:disable WordPress.XSS.EscapeOutput.OutputNotEscaped
-
-		do_action( 'woocommerce_product_thumbnails' );
 		?>
-	</figure>
+    </figure>
 </div>
+
