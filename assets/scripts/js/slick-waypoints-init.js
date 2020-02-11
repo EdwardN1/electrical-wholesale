@@ -77,7 +77,10 @@ jQuery(document).ready(function ($) {
             $('#'+id+' .slick-slide.slick-active').first().addClass('first-slide');
             $('#'+id+' .slick-slide.slick-active').last().addClass('last-slide');
         }
-    })
+    });
+
+    setTimeout(function() { $('.flex-control-nav').slick({ dots: true, infinite: true, arrows: false, speed: 600, slidesToShow: 2, slidesToScroll: 1, }); }, 300);
+
 
 
 });
