@@ -59,7 +59,7 @@ if ( post_password_required() ) {
 		 */
 		do_action( 'woocommerce_single_product_summary' );
 		?>
-	</div>
+	</div><div style="width:100%; height:0; clear: both;"></div>
 
 	<?php
 	/**

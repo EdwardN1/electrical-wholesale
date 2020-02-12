@@ -163,3 +163,24 @@ function ts_price_html($price, $product)
     ob_end_clean();
     return $res;
 }
+
+/**
+ * @param $translated_text
+ * @param $text
+ * @param $domain
+ *
+ * @return string|string[]
+ *
+ * Change Cart to Basket
+ */
+
+function gb_change_cart_string($translated_text, $text, $domain) {
+
+	$translated_text = str_replace("cart", "basket", $translated_text);
+
+	$translated_text = str_replace("Cart", "Basket", $translated_text);
+
+	return $translated_text;
+}
+
+add_filter('gettext', 'gb_change_cart_string', 100, 3);
