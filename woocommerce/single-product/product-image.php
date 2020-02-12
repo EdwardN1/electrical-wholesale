@@ -59,9 +59,7 @@ foreach ( $attachment_ids as $attachment_id ) {
 				foreach ( $imageList as $image ) {
 					?>
                     <div class="slick-product-slide">
-                        <a href="<?php echo $image; ?>">
                             <img src="<?php echo $image; ?>" class="slick-product-image">
-                        </a>
                     </div>
 					<?php
 				}

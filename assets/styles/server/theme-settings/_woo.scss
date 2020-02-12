@@ -1,0 +1,116 @@
+$images-left-width: 33%;
+$summary-right-width: 60%;
+$image-border: 1px solid $primary-color;
+
+.woocommerce, .woocommerce-page {
+  
+  .woocommerce-message{
+    border-top-color:$primary-color;
+    &:before {
+      color: $primary-color;
+    }
+  }
+  
+  .quantity {
+    .qty {
+      height: 3.3rem;
+      border: $image-border;
+      width: 5rem;
+    }
+  }
+  
+  #respond input#submit.alt,  a.button.alt, button.button.alt, input.button.alt {
+    background-color: $primary-color;
+    font-family: "Agan Extra Bold";
+    font-size: 24px;
+    padding-left: 2em;
+    padding-right: 2em;
+    border-radius: 0;
+    &:hover {
+      background-color: $primary-color;
+    }
+  }
+  div.product {
+    form.cart {
+      margin-top: 2rem;
+      margin-bottom: 1rem;
+      border-top: 1px solid #d7d7d7;
+      padding-top: 1rem;
+    }
+    h1.product_title {
+      line-height: 1.2;
+      padding-right: 3rem;
+      margin-bottom: 0.7rem;
+  	}
+    div.images {
+      padding-top: 1rem;
+      @include breakpoint(769) {
+        width: $images-left-width;
+      }
+    }
+    div.summary {
+      @include breakpoint(769) {
+        width: $summary-right-width;
+      }
+      .product_meta {
+        padding-bottom: 2rem;
+      }
+    }
+    p.price, span.price,  ul.products li.product .price {
+      line-height:1;
+      span {
+        color: $primary-color;
+        font-family: "Agan Extra Bold";
+        line-height: 1;
+        font-size: 30px;
+        &.only {
+          font-size: 28px;
+        }
+        &.amount {
+          font-size: 56px;
+          display: inline-block;
+          margin-left: -0.15em;
+        }
+        &.pence {
+          font-size: 36px;
+          display: inline-block;
+          margin-left: -0.5em;
+        }
+        &.woocommerce-Price-currencySymbol {
+          font-size: 48px;
+          position: relative;
+          color: transparent;
+          &:before {
+            position: absolute;
+            color: $primary-color;
+            top: 0.1em;
+            right:0;
+            font-size: 36px;
+            content: "£";
+          }
+        }
+        &.normal {
+          font-size: 18px;
+          color: #0a0a0a;
+          font-family: "Agan Light";
+        }
+      }
+    }    
+  }
+  .slick-product-gallery, .slick-thumbnail-gallery {
+    margin-left: -1rem;
+    img {
+      border: $image-border;
+      cursor: pointer;
+    }
+    .slick-slide {
+      padding-left: 1rem;
+      padding-right: 1rem;
+    }
+  }
+  
+  .slick-thumbnail-gallery {
+    padding-top: 1rem;
+  }
+} 
+

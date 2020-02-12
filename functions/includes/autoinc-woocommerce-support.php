@@ -1,10 +1,11 @@
 <?php
 
-function tc_add_woocommerce_support() {
-	add_theme_support( 'woocommerce' );
+function tc_add_woocommerce_support()
+{
+    add_theme_support('woocommerce');
 }
 
-add_action( 'after_setup_theme', 'tc_add_woocommerce_support' );
+add_action('after_setup_theme', 'tc_add_woocommerce_support');
 
 //add_theme_support( 'wc-product-gallery-zoom' );
 //add_theme_support( 'wc-product-gallery-lightbox' );
@@ -56,23 +57,23 @@ add_action( 'after_setup_theme', 'mytheme_add_woocommerce_support' );*/
  * @hooked WC_Structured_Data::generate_product_data() - 60
  */
 
-remove_action('woocommerce_single_product_summary','woocommerce_template_single_title',5);
-remove_action('woocommerce_single_product_summary','woocommerce_template_single_rating',10);
-remove_action('woocommerce_single_product_summary','woocommerce_template_single_price',10);
-remove_action('woocommerce_single_product_summary','woocommerce_template_single_excerpt',20);
-remove_action('woocommerce_single_product_summary','woocommerce_template_single_add_to_cart',30);
-remove_action('woocommerce_single_product_summary','woocommerce_template_single_meta',40);
-remove_action('woocommerce_single_product_summary','woocommerce_template_single_sharing',50);
+remove_action('woocommerce_single_product_summary', 'woocommerce_template_single_title', 5);
+remove_action('woocommerce_single_product_summary', 'woocommerce_template_single_rating', 10);
+remove_action('woocommerce_single_product_summary', 'woocommerce_template_single_price', 10);
+remove_action('woocommerce_single_product_summary', 'woocommerce_template_single_excerpt', 20);
+remove_action('woocommerce_single_product_summary', 'woocommerce_template_single_add_to_cart', 30);
+remove_action('woocommerce_single_product_summary', 'woocommerce_template_single_meta', 40);
+remove_action('woocommerce_single_product_summary', 'woocommerce_template_single_sharing', 50);
 //remove_action('woocommerce_single_product_summary','WC_Structured_Data::generate_product_data()',60);
 
-add_action('woocommerce_single_product_summary','woocommerce_template_single_title',5);
-add_action('woocommerce_single_product_summary','woocommerce_template_single_meta',10);
-add_action('woocommerce_single_product_summary','woocommerce_template_single_rating',20);
-add_action('woocommerce_single_product_summary','woocommerce_template_single_price',20);
-add_action('woocommerce_single_product_summary','woocommerce_template_single_add_to_cart',30);
+add_action('woocommerce_single_product_summary', 'woocommerce_template_single_title', 5);
+add_action('woocommerce_single_product_summary', 'woocommerce_template_single_meta', 10);
+add_action('woocommerce_single_product_summary', 'woocommerce_template_single_rating', 20);
+add_action('woocommerce_single_product_summary', 'woocommerce_template_single_price', 20);
+add_action('woocommerce_single_product_summary', 'woocommerce_template_single_add_to_cart', 30);
 //add_action('woocommerce_single_product_summary','woocommerce_template_single_excerpt',40);
-add_action('woocommerce_single_product_summary','woocommerce_output_product_data_tabs',50);
-add_action('woocommerce_single_product_summary','woocommerce_template_single_sharing',55);
+add_action('woocommerce_single_product_summary', 'woocommerce_output_product_data_tabs', 50);
+add_action('woocommerce_single_product_summary', 'woocommerce_template_single_sharing', 55);
 //add_action('woocommerce_single_product_summary','WC_Structured_Data::generate_product_data()',70);
 
 /**
@@ -86,29 +87,31 @@ add_action('woocommerce_single_product_summary','woocommerce_template_single_sha
  * @hooked woocommerce_output_related_products - 20
  */
 
-remove_action('woocommerce_after_single_product_summary','woocommerce_output_product_data_tabs',10);
+remove_action('woocommerce_after_single_product_summary', 'woocommerce_output_product_data_tabs', 10);
 
 /**
  * Reorder product data tabs
  */
-add_filter( 'woocommerce_product_tabs', 'woo_reorder_tabs', 98 );
-function woo_reorder_tabs( $tabs ) {
+add_filter('woocommerce_product_tabs', 'woo_reorder_tabs', 98);
+function woo_reorder_tabs($tabs)
+{
 
-	$tabs['description']['priority'] = 10;			// Description second
-	$tabs['reviews']['priority'] = 15;			// Reviews third
+    $tabs['description']['priority'] = 10;            // Description second
+    $tabs['reviews']['priority'] = 15;            // Reviews third
 
-	return $tabs;
+    return $tabs;
 }
 
 /**
  * Rename product data tabs
  */
-add_filter( 'woocommerce_product_tabs', 'woo_rename_tabs', 98 );
-function woo_rename_tabs( $tabs ) {
+add_filter('woocommerce_product_tabs', 'woo_rename_tabs', 98);
+function woo_rename_tabs($tabs)
+{
 
-	$tabs['description']['title'] = __( 'Product Details' );		// Rename the description tab
+    $tabs['description']['title'] = __('Product Details');        // Rename the description tab
 
-	return $tabs;
+    return $tabs;
 
 }
 
@@ -116,26 +119,47 @@ function woo_rename_tabs( $tabs ) {
 /**
  * Add a custom product data tab
  */
-add_filter( 'woocommerce_product_tabs', 'woo_new_product_tab' );
-function woo_new_product_tab( $tabs ) {
+add_filter('woocommerce_product_tabs', 'woo_new_product_tab');
+function woo_new_product_tab($tabs)
+{
 
-	// Adds the new tab
+    // Adds the new tab
 
-	$tabs['test_tab'] = array(
-		'title' 	=> __( 'Description', 'woocommerce' ),
-		'priority' 	=> 5,
-		'callback' 	=> 'woo_new_product_tab_content'
-	);
+    $tabs['test_tab'] = array(
+        'title' => __('Description', 'woocommerce'),
+        'priority' => 5,
+        'callback' => 'woo_new_product_tab_content'
+    );
 
-	return $tabs;
+    return $tabs;
 
 }
-function woo_new_product_tab_content() {
 
-	// The new tab content
+function woo_new_product_tab_content()
+{
 
-	/*echo '<h2>New Product Tab</h2>';
-	echo '<p>Here\'s your new product tab.</p>';*/
-	woocommerce_template_single_excerpt();
+    // The new tab content
+
+    /*echo '<h2>New Product Tab</h2>';
+    echo '<p>Here\'s your new product tab.</p>';*/
+    woocommerce_template_single_excerpt();
 }
 
+add_filter('woocommerce_get_price_html', 'ts_price_html', 100, 2);
+
+function ts_price_html($price, $product)
+{
+    ob_start();
+    $sPrice = explode('.', $price);
+    ?>
+    <span class="only">Only</span>
+    <br>
+    <?php echo $sPrice[0]; ?>
+    <span class="pence">.<?php echo $sPrice[1]; ?></span>
+    <br>
+    <span class="normal">VAT excluded</span>
+    <?php
+    $res = ob_get_contents();
+    ob_end_clean();
+    return $res;
+}

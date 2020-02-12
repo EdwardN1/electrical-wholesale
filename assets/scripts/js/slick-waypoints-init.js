@@ -102,4 +102,8 @@ jQuery(document).ready(function ($) {
             asNavFor: '.slick-product-gallery'
         }
     );
+    $('.slick-product-gallery').slickLightbox({
+        src: 'src',
+        itemSelector: '.slick-product-slide img'
+    })
 });
