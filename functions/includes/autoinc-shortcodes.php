@@ -3,6 +3,7 @@ add_shortcode('icon', 'Generateicon');
 add_shortcode('nav', 'Generatenav');
 add_shortcode('searchform', 'Generatesearchform');
 add_shortcode('sociallink', 'Generatesociallink');
+add_shortcode('basketbutton', 'Generatebasketbutton');
 
 function Generatesociallink($params = array())
 {
@@ -107,6 +108,27 @@ function Generatenav($params = array())
     }
 
     return $res;
+}
+
+function Generatebasketbutton($params = array()) {
+	extract(shortcode_atts(array(
+		'name' => '',
+	), $params));
+
+	/**
+	 *
+	 * Need to tell IDE that these variables do exist
+	 *
+	 * @var string $name
+	 */
+
+	$res = '';
+
+	if($name) {
+		$icon = Generateicon($params);
+	}
+
+	return $res;
 }
 
 function Generateicon($params = array())
