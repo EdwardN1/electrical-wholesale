@@ -153,9 +153,7 @@ function ts_price_html($price, $product)
     $sPrice = explode('.', $price);
     ?>
     <span class="only">Only</span>
-    <br>
-    <?php echo $sPrice[0]; ?>
-    <span class="pence">.<?php echo $sPrice[1]; ?></span>
+    <br><?php echo $sPrice[0]; ?><span class="pence">.<?php echo $sPrice[1]; ?></span>
     <br>
     <span class="normal">VAT excluded</span>
     <?php
@@ -174,13 +172,77 @@ function ts_price_html($price, $product)
  * Change Cart to Basket
  */
 
-function gb_change_cart_string($translated_text, $text, $domain) {
+function gb_change_cart_string($translated_text, $text, $domain)
+{
 
-	$translated_text = str_replace("cart", "basket", $translated_text);
+    $translated_text = str_replace("cart", "basket", $translated_text);
 
-	$translated_text = str_replace("Cart", "Basket", $translated_text);
+    $translated_text = str_replace("Cart", "Basket", $translated_text);
 
-	return $translated_text;
+    return $translated_text;
 }
 
 add_filter('gettext', 'gb_change_cart_string', 100, 3);
+
+/**
+ * Hook: woocommerce_shop_loop_item_title.
+ *
+ * @hooked woocommerce_template_loop_product_title - 10
+ */
+remove_action('woocommerce_shop_loop_item_title', 'woocommerce_template_loop_product_title', 10);
+add_action('woocommerce_shop_loop_item_title', 'ts_woocommerce_template_loop_product_title', 10);
+
+function ts_woocommerce_template_loop_product_title()
+{
+    $title = get_the_title();
+    if (str_word_count($title, 0) > 10) {
+        $words = str_word_count($title, 2);
+        $pos = array_keys($words);
+        $title = substr($title, 0, $pos[10]) . '...';
+    }
+
+    echo '<h2 class="' . esc_attr(apply_filters('woocommerce_product_loop_title_classes', 'woocommerce-loop-product__title')) . '">' . $title . '</h2>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+}
+
+function ts_product_subcategories($args = array())
+{
+    $parentid = get_queried_object_id();
+
+    $args = array(
+        'parent' => $parentid
+    );
+
+    error_log($parentid);
+
+    $terms = get_terms('product_cat', $args);
+
+    if ($terms) {
+
+        echo '<ul class="products columns-4">';
+
+        foreach ($terms as $term) {
+
+            if ($term->name != 'Uncategorized'):
+
+                echo '<li class="product-category product">';
+                echo '<a href="' . esc_url(get_term_link($term)) . '" class="' . $term->slug . '">';
+                woocommerce_subcategory_thumbnail($term);
+
+                echo '<h2 class="woocommerce-loop-category__title">';
+
+                echo $term->name;
+
+                echo '</h2>';
+                echo '</a>';
+                echo '</li>';
+            endif;
+
+
+        }
+
+        echo '</ul>';
+
+    }
+}
+
+add_action('woocommerce_before_shop_loop', 'ts_product_subcategories', 50);

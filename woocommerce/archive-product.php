@@ -19,7 +19,7 @@ defined( 'ABSPATH' ) || exit;
 
 get_header( 'shop' );
 ?>
-    <div class="grid-container">
+    <div class="grid-container archive-product">
 		<?php
 		/**
 		 * Hook: woocommerce_before_main_content.
