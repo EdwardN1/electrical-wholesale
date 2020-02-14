@@ -5,6 +5,43 @@ add_shortcode('searchform', 'Generatesearchform');
 add_shortcode('sociallink', 'Generatesociallink');
 add_shortcode('basketbutton', 'Generatebasketbutton');
 
+function Generatebasketbutton($params = array()) {
+    extract(shortcode_atts(array(
+        'name' => '',
+        'includelink' => true,
+        'includeheading' => true,
+        'linkOverride' => wc_get_cart_url(),
+    ), $params));
+
+    /**
+     *
+     * Need to tell IDE that these variables do exist
+     *
+     * @var string $includelink
+     * @var string $name
+     * @var string $includeheading
+     * @var string $linkOverride
+     */
+
+    $basketParams = $params;
+
+    $cart_count = WC()->cart->cart_contents_count;
+
+    $basketParams['includelink'] = $includelink;
+    $basketParams['includeheading'] = $includeheading;
+    $basketParams['linkOverride'] = $linkOverride;
+
+    $res = '<style id="basket-cart-qty">a.icon-link-basket:after {content: "'.$cart_count.'";}</style>';
+
+    if($name) {
+        $icon = Generateicon($basketParams);
+
+        $res .= $icon;
+    }
+
+    return $res;
+}
+
 function Generatesociallink($params = array())
 {
 
@@ -110,27 +147,6 @@ function Generatenav($params = array())
     return $res;
 }
 
-function Generatebasketbutton($params = array()) {
-	extract(shortcode_atts(array(
-		'name' => '',
-	), $params));
-
-	/**
-	 *
-	 * Need to tell IDE that these variables do exist
-	 *
-	 * @var string $name
-	 */
-
-	$res = '';
-
-	if($name) {
-		$icon = Generateicon($params);
-	}
-
-	return $res;
-}
-
 function Generateicon($params = array())
 {
 
@@ -138,7 +154,8 @@ function Generateicon($params = array())
     extract(shortcode_atts(array(
         'name' => '',
         'includelink' => false,
-        'includeheading' => false
+        'includeheading' => false,
+        'linkOverride' => ''
     ), $params));
 
     /**
@@ -148,6 +165,7 @@ function Generateicon($params = array())
      * @var string $includelink
      * @var string $name
      * @var string $includeheading
+     * @var string $linkOverride
      */
 
     $res = '';
@@ -161,7 +179,11 @@ function Generateicon($params = array())
                     if ($icon) {
                         $iconURL = $icon['url'];
                         $iconALT = $icon['alt'];
-                        $link = get_sub_field('link');
+                        if($linkOverride != '') {
+                            $link = $linkOverride;
+                        } else {
+                            $link = get_sub_field('link');
+                        }
                         $heading = get_sub_field('heading');
                         $heading_position = get_sub_field('heading_position');
                         $iconSRC = '<img src="' . $iconURL . '" alt="' . $iconALT . '" class="icon-' . $name . '"/>';

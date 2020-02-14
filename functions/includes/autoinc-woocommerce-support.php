@@ -195,54 +195,81 @@ add_action('woocommerce_shop_loop_item_title', 'ts_woocommerce_template_loop_pro
 function ts_woocommerce_template_loop_product_title()
 {
     $title = get_the_title();
-    if (str_word_count($title, 0) > 10) {
+    if (str_word_count($title, 0) > 5) {
         $words = str_word_count($title, 2);
         $pos = array_keys($words);
-        $title = substr($title, 0, $pos[10]) . '...';
+        $title = substr($title, 0, $pos[5]) . '...';
     }
 
     echo '<h2 class="' . esc_attr(apply_filters('woocommerce_product_loop_title_classes', 'woocommerce-loop-product__title')) . '">' . $title . '</h2>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 }
 
+/**
+ * Hook: woocommerce_before_shop_loop
+ *
+ *  Add in categories and sub-categories to product listings.
+ */
+
 function ts_product_subcategories($args = array())
 {
-    $parentid = get_queried_object_id();
 
-    $args = array(
-        'parent' => $parentid
-    );
+        $parentid = get_queried_object_id();
+        $args = array(
+            'parent' => $parentid
+        );
 
-    error_log($parentid);
+        $terms = get_terms('product_cat', $args);
 
-    $terms = get_terms('product_cat', $args);
-
-    if ($terms) {
-
-        echo '<ul class="products columns-4">';
-
-        foreach ($terms as $term) {
-
-            if ($term->name != 'Uncategorized'):
-
-                echo '<li class="product-category product">';
-                echo '<a href="' . esc_url(get_term_link($term)) . '" class="' . $term->slug . '">';
-                woocommerce_subcategory_thumbnail($term);
-
-                echo '<h2 class="woocommerce-loop-category__title">';
-
-                echo $term->name;
-
-                echo '</h2>';
-                echo '</a>';
-                echo '</li>';
-            endif;
-
-
+        if ($terms) {
+            $numberCols = 4;
+            echo '<ul class="products columns-' . $numberCols . '">';
+            $colCount = 1;
+            $colClass = '';
+            foreach ($terms as $term) {
+                if (($term->name != 'Uncategorized') && ($term->count > 0)):
+                    if ($colCount == 1) {
+                        $colClass = ' first';
+                    } else {
+                        $colClass = '';
+                    }
+                    if ($colCount == $numberCols) {
+                        $colClass = ' last';
+                        $colCount = 1;
+                    } else {
+                        $colCount++;
+                    }
+                    echo '<li class="product-category product' . $colClass . '">';
+                    echo '<a href="' . esc_url(get_term_link($term)) . '" class="' . $term->slug . '">';
+                    woocommerce_subcategory_thumbnail($term);
+                    echo '<h2 class="woocommerce-loop-category__title">';
+                    echo $term->name;
+                    echo '</h2>';
+                    echo '</a>';
+                    echo '</li>';
+                endif;
+            }
+            echo '</ul>';
         }
 
-        echo '</ul>';
-
-    }
 }
 
-add_action('woocommerce_before_shop_loop', 'ts_product_subcategories', 50);
+
+//add_action('woocommerce_before_main_content', 'ts_product_subcategories', 500);
+
+/**
+ * Add AJAX Shortcode when cart contents update
+ */
+
+add_filter( 'woocommerce_add_to_cart_fragments', 'woo_cart_but_count' );
+
+function woo_cart_but_count( $fragments ) {
+
+
+
+    $cart_count = WC()->cart->cart_contents_count;
+
+    $frag = '<style id="basket-cart-qty">a.icon-link-basket:after {content: "'.$cart_count.'";}</style>';
+    $fragments['style#basket-cart-qty'] = $frag;
+
+    return $fragments;
+}

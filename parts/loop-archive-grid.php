@@ -18,18 +18,47 @@ $grid_columns = 4; ?>
 		<div class="small-6 medium-3 large-3 cell panel" data-equalizer-watch>
 		
 			<article id="post-<?php the_ID(); ?>" <?php post_class(''); ?> role="article">
-			
+
+                <style>
+                    .featured-image img {
+                        max-height: 300px;
+                        height: auto;
+                        width: auto;
+                    }
+                    .featured-image {
+                        min-height: 300px;
+                    }
+                </style>
 				<section class="featured-image" itemprop="text">
 					<?php the_post_thumbnail('full'); ?>
 				</section> <!-- end article section -->
 			
 				<header class="article-header">
-					<h3 class="title"><a href="<?php the_permalink() ?>" rel="bookmark" title="<?php the_title_attribute(); ?>"><?php the_title(); ?></a></h3>	
-					<?php get_template_part( 'parts/content', 'byline' ); ?>				
+					<h3 class="title"><a href="<?php the_permalink() ?>" rel="bookmark" title="<?php the_title_attribute(); ?>">
+                            <?php
+                            $title= get_the_title();
+                            if (str_word_count($title, 0) > 5) {
+                                $words = str_word_count($title, 2);
+                                $pos = array_keys($words);
+                                $title = substr($title, 0, $pos[5]) . '...';
+                            }
+                            echo $title; ?>
+                        </a></h3>
+					<?php //get_template_part( 'parts/content', 'byline' ); ?>
 				</header> <!-- end article header -->	
 								
 				<section class="entry-content" itemprop="text">
-					<?php the_content('<button class="tiny">' . __( 'Read more...', 'jointswp' ) . '</button>'); ?> 
+					<?php
+                    ob_start();
+                    the_content();
+                    $content = ob_get_contents();
+                    ob_end_clean();
+                    if (str_word_count($content, 0) > 50) {
+                        $words = str_word_count($content, 2);
+                        $pos = array_keys($words);
+                        $content = substr($content, 0, $pos[50]) . '...';
+                    }
+                    echo $content; ?>
 				</section> <!-- end article section -->
 								    							
 			</article> <!-- end article -->
