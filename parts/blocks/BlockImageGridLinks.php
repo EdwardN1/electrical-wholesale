@@ -145,7 +145,7 @@
 						<?php endif; ?>
 
                         <div class="image-link-grid-cell<?php echo $cellClass; ?>">
-                            <div class="image-link-grid-cell-contents<?php echo $cellPadClass; ?>">
+                            <div class="image-link-grid-cell-contents<?php echo $cellPadClass; ?>" data-col="<?php echo $currentCol;?>">
 								<?php if ( $href != '' ): ?>
                                     <a class="image-grid-link-anchor" href="<?php echo $href; ?>"<?php echo $blank ?>>
                                         <div class="image"
@@ -174,6 +174,7 @@
 						} else {
 							if ( $currentCol == ( $column_count + 1 ) ) {
 								$cellPadClass = ' right-cell-pad';
+								$currentCol = 1;
 							} else {
 								$cellPadClass = ' cell-pad';
 							}
