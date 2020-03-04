@@ -1,7 +1,7 @@
 <?php if (have_rows('footer_rows', 'option')) : ?>
     <?php while (have_rows('footer_rows', 'option')) : the_row(); ?>
         <div class="<?php echo cssName(get_sub_field('row_name')); ?>">
-            <div class="grid-container">
+            <!--<div class="grid-container">-->
                 <?php $row_type = get_sub_field('row_type'); ?>
                 <?php if ($row_type == 'Container'): ?>
                     <?php if (have_rows('container_rows')) : ?>
@@ -34,7 +34,7 @@
                         <?php the_sub_field('text_content'); ?>
                     <?php endif; ?>
                 <?php endif; ?>
-            </div>
+            <!--</div>-->
         </div>
     <?php endwhile; ?>
 <?php else : ?>
