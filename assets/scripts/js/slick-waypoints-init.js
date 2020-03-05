@@ -18,11 +18,20 @@ jQuery(document).ready(function ($) {
         });
     });
 
-    let slickOpts = {
+    /*let slickOpts = {
         dots: true
     };
 
-    $('[data-slick-slider]').slick(slickOpts);
+    $('[data-slick-slider]').slick(slickOpts);*/
+
+    $('[data-slick-slider]').each(function(e) {
+        let slickOpts = $(this).data('slick');
+        if(slickOpts) {
+            $(this).slick(slickOpts);
+        } else {
+            $(this).slick();
+        }
+    });
 
     $('[data-slick-carousel]').each(function (e) {
         let breakpoints = $(this).data('breakpoints');
