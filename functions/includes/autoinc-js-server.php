@@ -8,12 +8,13 @@ function compileJS() {
     $postfiles = glob(JSSERVERPATH . '/posts/*.js');
     $themefiles = glob(JSSERVERPATH . '/theme/*.js');
     $js = '';
+
+	foreach($themefiles as $themefile) {
+		$js .= file_get_contents($themefile);
+	}
+
     foreach($postfiles as $postfile) {
         $js .= file_get_contents($postfile);
-    }
-
-    foreach($themefiles as $themefile) {
-        $js .= file_get_contents($themefile);
     }
 
     $js = \JShrink\Minifier::minify('jQuery(document).ready(function ($) {'.$js.'});');

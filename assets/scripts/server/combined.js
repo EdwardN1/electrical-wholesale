@@ -1,1 +1,1 @@
-jQuery(document).ready(function($){let xtest='Hello World';window.console.log(xtest);});
+jQuery(document).ready(function($){let theThemeTest='this is a test';let xtest='Hello World 2';window.console.log(xtest);});

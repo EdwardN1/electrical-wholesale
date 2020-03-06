@@ -343,3 +343,8 @@ function getWooSCSS(){
 	$WooSCSS = get_field('woocommerce_cssscss','option');
 	return $WooSCSS;
 }
+
+function getDefaultJS() {
+    $defaultJS = get_field('jquery','option');
+    return $defaultJS;
+}
