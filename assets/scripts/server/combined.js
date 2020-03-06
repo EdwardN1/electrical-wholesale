@@ -1,0 +1,1 @@
+jQuery(document).ready(function($){let xtest='Hello World';window.console.log(xtest);});

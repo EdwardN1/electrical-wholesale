@@ -41,17 +41,21 @@ function css_save_post( $post_id, $post, $update ) {
 
 	$postSCSS     = '';
 	$scssFilename = '';
+    $jsFilename = '';
 	$scssImport   = '';
 	$z_postSCSS   = '';
+	$postJS = '';
 
 	if ( $post->post_type == 'post' ) {
 		$z_postSCSS   .= '.postid-' . $post_id . ' {';
 		$scssFilename = '_postid-' . $post_id . '.scss';
+        $jsFilename = '_postid-' . $post_id . '.js';
 		$scssImport   = '@import "postid-' . $post_id . '";';
 	}
 	if ( $post->post_type == 'page' ) {
 		$z_postSCSS   .= '.page-id-' . $post_id . ' {';
 		$scssFilename = '_page-id-' . $post_id . '.scss';
+        $jsFilename = '_page-id-' . $post_id . '.js';
 		$scssImport   = '@import "page-id-' . $post_id . '";';
 	}
 
@@ -108,6 +112,7 @@ function css_save_post( $post_id, $post, $update ) {
 		while ( have_rows( 'content', $post_id ) ): the_row();
 			$sectionID = cssName( get_sub_field( 'id' ) );
 			$sectionSCSS = get_sub_field('cssscss');
+			$sectionJS = get_sub_field('jquery');
 			if($sectionSCSS != '') {
 				if ( $postSCSS == '' ) {
 					$postSCSS .= $z_postSCSS;
@@ -116,6 +121,9 @@ function css_save_post( $post_id, $post, $update ) {
 				$postSCSS .= $sectionSCSS;
 				$postSCSS .= '}';
 				}
+			if($sectionJS != '') {
+			    $postJS .= '/* added in '.$sectionID.' */'.$sectionJS;
+			}
 		endwhile;
 	endif;
 
@@ -132,4 +140,9 @@ function css_save_post( $post_id, $post, $update ) {
 		}
 		update_css();
 	}
+
+	if( $postJS != '') {
+        file_put_contents( get_template_directory() . '/assets/scripts/server/posts/' . $jsFilename, $postJS );
+        compileJS();
+    }
 }
