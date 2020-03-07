@@ -25,3 +25,12 @@ function site_scripts()
 }
 
 add_action('wp_enqueue_scripts', 'site_scripts', 999);
+
+add_action('admin_enqueue_scripts','tc_load_admin_script');
+function tc_load_admin_script( $hook ){
+	wp_enqueue_script(
+		'tc_admin_script', //unique handle
+		get_template_directory_uri().'/assets/scripts/admin-scripts.js', //location
+		array('jquery')  //dependencies
+	);
+}
