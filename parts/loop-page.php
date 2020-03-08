@@ -58,22 +58,24 @@
 
 					if ( $formatedAttributes['type'] == 'link' ) {
 						$tokenName = $formatedAttributes['name'];
+						$class = $formatedAttributes['class'];
+						if($class) {$class=' class="'.$class.'"';} else {$class='';}
 						if ( have_rows( 'link_tokens' ) ) :
 							while ( have_rows( 'link_tokens' ) ) : the_row();
 								if ( get_sub_field( 'name' ) == $tokenName ) {
 								    if($replaceWith=='') {
 									    $replaceWith = '<a href="';
 									    if ( get_sub_field( 'link_type' ) == 'Internal Page' ) {
-										    $replaceWith .= get_sub_field( 'page' ) . '" >' . get_sub_field( 'link_description' ) . '</a>';
+										    $replaceWith .= get_sub_field( 'page' ) . '"'.$class.'>' . get_sub_field( 'link_description' ) . '</a>';
 									    }
 									    if ( get_sub_field( 'link_type' ) == 'External Page' ) {
-										    $replaceWith .= get_sub_field( 'url' ) . '" target="_blank">' . get_sub_field( 'link_description' ) . '</a>';
+										    $replaceWith .= get_sub_field( 'url' ) . '" target="_blank"'.$class.'>' . get_sub_field( 'link_description' ) . '</a>';
 									    }
 									    if ( get_sub_field( 'link_type' ) == 'Text' ) {
-										    $replaceWith .= get_sub_field( 'text' ) . '" >' . get_sub_field( 'link_description' ) . '</a>';
+										    $replaceWith .= get_sub_field( 'text' ) . '"'.$class.'>' . get_sub_field( 'link_description' ) . '</a>';
 									    }
 									    if ( get_sub_field( 'link_type' ) == 'File' ) {
-										    $replaceWith .= get_sub_field( 'file' ) . '" target="_blank">' . get_sub_field( 'link_description' ) . '</a>';
+										    $replaceWith .= get_sub_field( 'file' ) . '" target="_blank"'.$class.'>' . get_sub_field( 'link_description' ) . '</a>';
 									    }
 								    }
 									//break;
