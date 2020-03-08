@@ -23,9 +23,10 @@ function acfgbc_BlockHeroSection() {
 		'keywords'        => array( 'Row', 'Common' ),
 	) );
 }
+
 function acfgbc_BlockHeroSection_rc( $block, $content = '', $is_preview = false ) {
-	if ($is_preview) {
-		include_once get_template_directory().'/parts/blocks/editor/styles.php';
+	if ( $is_preview ) {
+		include_once get_template_directory() . '/parts/blocks/editor/styles.php';
 	}
-	include get_template_directory(). '/parts/blocks/BlockHeroSection.php';
+	include get_template_directory() . '/parts/blocks/BlockHeroSection.php';
 }
