@@ -105,7 +105,6 @@ jQuery(document).ready(function ($) {
 
     if (window.acf) {
         window.acf.addAction('load', initCodeMirrors);
-        window.acf.addAction('remount', refreshCodeMirrors)
     }
 
 
