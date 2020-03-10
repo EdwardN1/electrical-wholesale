@@ -109,6 +109,11 @@ function tokens($text) {
             endif;
         }
 
+        if ($formatedAttributes['type'] == 'option') {
+            $tokenName = $formatedAttributes['name'];
+            $replaceWith = get_field($tokenName,'option');
+        }
+
 
         $html =  str_replace($originalTag, $replaceWith, $html);
     }
