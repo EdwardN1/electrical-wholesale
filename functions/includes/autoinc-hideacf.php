@@ -9,12 +9,24 @@
 add_filter('acf/settings/show_admin', 'show_acf');
 
 function show_acf() {
-	global $current_user;
+	/*global $current_user;
 	get_currentuserinfo();
 	$ret = true;
 	$email = (string) $current_user->user_email;
 	if($email != 'edward@technicks.com') {
 		$ret = false;
-	}
-	return $ret;
+	}*/
+	return isDeveloper();
 }
+
+function isDeveloper() {
+    global $current_user;
+    get_currentuserinfo();
+    $ret = true;
+    $email = (string) $current_user->user_email;
+    if($email != 'edward@technicks.com') {
+        $ret = false;
+    }
+    return $ret;
+}
+
