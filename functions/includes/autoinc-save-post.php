@@ -4,7 +4,7 @@ add_action( 'acf/save_post', 'acf_save_post_processing', 20 );
 function acf_save_post_processing( $post_id ) {
 	$screen = get_current_screen();
 	//error_log('Screen ID = '.$screen->id);
-	if ( strpos( $screen->id, 'theme-general-settings' ) == true ) {
+	if ( (strpos( $screen->id, 'theme-general-settings' ) == true) || (strpos( $screen->id, 'master-page-settings' ) == true) ) {
 		$header      = getHeaderSCSS();
 		$footer      = getFooterSCSS();
 		$typography  = getTypographySCSS();
