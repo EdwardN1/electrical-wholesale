@@ -14,7 +14,7 @@
                                             <?php if ($container_content_type == 'Wysiwyg Content'): ?>
                                                 <?php $container_content = the_sub_field('container_content'); ?>
                                             <?php else: ?>
-                                                <?php the_sub_field('container_content_text'); ?>
+                                                <?php echo tokens(get_sub_field('container_content_text')); ?>
                                             <?php endif; ?>
                                         </div>
                                     <?php endwhile; ?>
@@ -31,7 +31,7 @@
                     <?php if ($content_type == 'Wysiwyg Editor'): ?>
                         <?php the_sub_field('wysiwyg_content'); ?>
                     <?php else: ?>
-                        <?php the_sub_field('text_content'); ?>
+                        <?php echo tokens(get_sub_field('text_content')); ?>
                     <?php endif; ?>
                 <?php endif; ?>
             <!--</div>-->
