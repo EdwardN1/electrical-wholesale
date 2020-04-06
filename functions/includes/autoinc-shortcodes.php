@@ -31,7 +31,7 @@ function Generatebasketbutton($params = array()) {
     $basketParams['includeheading'] = $includeheading;
     $basketParams['linkOverride'] = $linkOverride;
 
-    $res = '<style id="basket-cart-qty">a.icon-link-basket:after {content: "'.$cart_count.'";}</style>';
+    $res = '<style id="basket-cart-qty">a.icon-link-basket-pink:after {content: "'.$cart_count.'";}</style>';
 
     if($name) {
         $icon = Generateicon($basketParams);
@@ -186,8 +186,8 @@ function Generateicon($params = array())
                         }
                         $heading = get_sub_field('heading');
                         $heading_position = get_sub_field('heading_position');
-                        $iconSRC = '<img src="' . $iconURL . '" alt="' . $iconALT . '" class="icon-' . $name . '"/>';
-                        $iconLink = '<a href="' . $link . '" class="icon-link-' . $name . '">' . $iconSRC . '</a>';
+                        $iconSRC = '<img src="' . $iconURL . '" alt="' . $iconALT . '" class="icon-' . str_replace(' ', '-', $name) . '"/>';
+                        $iconLink = '<a href="' . $link . '" class="icon-link-' . str_replace(' ', '-', $name) . '">' . $iconSRC . '</a>';
                         $heading_link = '<a href="' . $link . '" class="icon-heading-link">' . $heading . '</a>';
                         //error_log('$iconSRC = '.$iconSRC);
                         // error_log('$iconLink = '.$iconLink);

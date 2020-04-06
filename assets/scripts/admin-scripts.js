@@ -107,6 +107,17 @@ jQuery(document).ready(function ($) {
         window.acf.addAction('load', initCodeMirrors);
     }
 
+    /*if(wp.data) {
+        wp.data.subscribe(function () {
+            var isSavingPost = wp.data.select('core/editor').isSavingPost();
+            var isAutosavingPost = wp.data.select('core/editor').isAutosavingPost();
+
+            if (isSavingPost && !isAutosavingPost) {
+                // Here goes your AJAX code ......
+                //window.console.log('Saving via block editor');
+            }
+        })
+    };*/
 
 
 });
