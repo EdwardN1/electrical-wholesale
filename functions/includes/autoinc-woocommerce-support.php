@@ -268,7 +268,7 @@ function woo_cart_but_count( $fragments ) {
 
     $cart_count = WC()->cart->cart_contents_count;
 
-    $frag = '<style id="basket-cart-qty">a.icon-link-basket:after {content: "'.$cart_count.'";}</style>';
+    $frag = '<style id="basket-cart-qty">a.icon-link-basket-pink:after {content: "'.$cart_count.'";}</style>';
     $fragments['style#basket-cart-qty'] = $frag;
 
     return $fragments;

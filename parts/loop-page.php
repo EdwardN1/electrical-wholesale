@@ -18,35 +18,10 @@
 
     <section class="acf-content-loop">
 
-        <?php if (have_rows('content')) : ?>
-            <?php while (have_rows('content')) : the_row(); ?>
-                <?php $dataFields = ''; ?>
-                <?php if (have_rows('data')) : ?>
-                    <?php while (have_rows('data')) : the_row(); ?>
-                        <?php
-                        $dataFields .= ' data-' . get_sub_field('name');
-                        $dataValue = get_sub_field('value');
-                        if ($dataValue != '') {
-                            $dataFields .= '="' . $dataValue . '"';
-                        }
-                        ?>
-                    <?php endwhile; ?>
-                <?php else : ?>
-                    <?php // no rows found ?>
-                <?php endif;
-                $classNames = get_sub_field('classes');
-                if ($classNames != '') {
-                    $classNames = ' class="' . $classNames . '"';
-                }
-                $html = get_sub_field('html');
-
-                $html = tokens($html);
-                ?>
-                <div id="<?php echo cssName(get_sub_field('id')); ?>"<?php echo $dataFields; ?><?php echo $classNames; ?>><?php echo $html; ?></div>
-            <?php endwhile; ?>
-        <?php else : ?>
-            <?php // no rows found ?>
-        <?php endif; ?>
+        <?php
+        //include_once get_template_directory().'/functions/includes/inc-acf-content-loop.php';
+        echo get_page_content_ex();
+        ?>
 
     </section>
 

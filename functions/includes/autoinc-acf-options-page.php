@@ -11,6 +11,22 @@ if (function_exists('acf_add_options_page')) {
         'redirect' => false
     ));
 
+    acf_add_options_page(array(
+        'page_title' => 'Header',
+        'menu_title' => 'Header',
+        'menu_slug' => 'header-rows',
+        'capability' => 'edit_posts',
+        'redirect' => false
+    ));
+
+    acf_add_options_page(array(
+        'page_title' => 'Footer',
+        'menu_title' => 'Footer',
+        'menu_slug' => 'footer-rows',
+        'capability' => 'edit_posts',
+        'redirect' => false
+    ));
+
     if ($current_user->user_email == 'edward@technicks.com') {
         acf_add_options_page(array(
             'page_title' => 'Master Page Settings',
