@@ -26,6 +26,26 @@ function getHeaderSCSS_ex()
     return $scss;
 }
 
+function getFooterSCSS_ex()
+{
+	$scss = '';
+	if (have_rows('footer_content', 'option')) {
+		$scss = 'footer {';
+		while (have_rows('footer_content', 'option')) : the_row();
+			$sectionID = cssName(get_sub_field('id'));
+			$sectionSCSS = get_sub_field('cssscss');
+			$sectionJS = get_sub_field('jquery');
+			if ($sectionSCSS != '') {
+				$scss .= '#' . $sectionID . ' {';
+				$scss .= $sectionSCSS;
+				$scss .= '}';
+			}
+		endwhile;
+		$scss .= '}';
+	}
+	return $scss;
+}
+
 function getHeaderSCSS()
 {
     /**

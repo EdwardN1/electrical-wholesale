@@ -8,7 +8,7 @@ function acf_save_post_processing($post_id)
     if ((strpos($screen->id, 'theme-general-settings') == true) || (strpos($screen->id, 'master-page-settings') == true) || (strpos($screen->id, 'header-rows') == true)) {
         //$header = getHeaderSCSS();
         $header = getHeaderSCSS_ex();
-        $footer = getFooterSCSS();
+        $footer = getFooterSCSS_ex();
         $typography = getTypographySCSS();
         $defaultSCSS = getDefaultSCSS();
         $wooSCSS = getWooSCSS();
