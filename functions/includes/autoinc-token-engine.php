@@ -1,5 +1,6 @@
 <?php
-function tokens($text) {
+function tokens($text)
+{
     $html = $text;
     $tokens = array();
     preg_match_all('/<token\s*([^>]*)\s*\/?>/', $html, $tokens, PREG_SET_ORDER);
@@ -46,6 +47,48 @@ function tokens($text) {
                             if (get_sub_field('link_type') == 'File') {
                                 $replaceWith .= get_sub_field('file') . '" target="_blank"' . $class . '>' . get_sub_field('link_description') . '</a>';
                             }
+                        }
+                        //break;
+                    }
+                endwhile;
+            endif;
+        }
+
+        if ($formatedAttributes['type'] == 'HREF') {
+            $tokenName = $formatedAttributes['name'];
+
+            if (have_rows('link_tokens')) :
+                while (have_rows('link_tokens')) : the_row();
+                    if (get_sub_field('name') == $tokenName) {
+                        if ($replaceWith == '') {
+
+                            if (get_sub_field('link_type') == 'Internal Page') {
+                                $replaceWith = get_sub_field('page');
+                            }
+                            if (get_sub_field('link_type') == 'External Page') {
+                                $replaceWith = get_sub_field('url');
+                            }
+                            if (get_sub_field('link_type') == 'Text') {
+                                $replaceWith = get_sub_field('text');
+                            }
+                            if (get_sub_field('link_type') == 'File') {
+                                $replaceWith = get_sub_field('file');
+                            }
+                        }
+                        //break;
+                    }
+                endwhile;
+            endif;
+        }
+
+        if ($formatedAttributes['type'] == 'linkdescription') {
+            $tokenName = $formatedAttributes['name'];
+
+            if (have_rows('link_tokens')) :
+                while (have_rows('link_tokens')) : the_row();
+                    if (get_sub_field('name') == $tokenName) {
+                        if ($replaceWith == '') {
+                            $replaceWith = get_sub_field('link_description');
                         }
                         //break;
                     }
@@ -111,11 +154,11 @@ function tokens($text) {
 
         if ($formatedAttributes['type'] == 'option') {
             $tokenName = $formatedAttributes['name'];
-            $replaceWith = get_field($tokenName,'option');
+            $replaceWith = get_field($tokenName, 'option');
         }
 
 
-        $html =  str_replace($originalTag, $replaceWith, $html);
+        $html = str_replace($originalTag, $replaceWith, $html);
     }
 
     return $html;
