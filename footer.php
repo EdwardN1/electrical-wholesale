@@ -11,7 +11,9 @@
 
 <footer class="footer" role="contentinfo">
 
-    <?php get_template_part( 'parts/footer', 'content' ); ?>
+    <?php //get_template_part( 'parts/footer', 'content' ); ?>
+
+    <?php echo get_footer_content(); ?>
 
 </footer> <!-- end .footer -->
 

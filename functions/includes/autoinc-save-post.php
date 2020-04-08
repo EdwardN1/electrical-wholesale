@@ -5,7 +5,7 @@ function acf_save_post_processing($post_id)
 {
     $screen = get_current_screen();
     //error_log('Screen ID = '.$screen->id);
-    if ((strpos($screen->id, 'theme-general-settings') == true) || (strpos($screen->id, 'master-page-settings') == true) || (strpos($screen->id, 'header-rows') == true)) {
+    if ((strpos($screen->id, 'theme-general-settings') == true) || (strpos($screen->id, 'master-page-settings') == true) || (strpos($screen->id, 'header-rows') == true) || (strpos($screen->id, 'footer-rows') == true)) {
         //$header = getHeaderSCSS();
         $header = getHeaderSCSS_ex();
         $footer = getFooterSCSS_ex();
