@@ -9,11 +9,11 @@ function acf_save_post_processing($post_id)
         //$header = getHeaderSCSS();
         $header = getHeaderSCSS_ex();
         $footer = getFooterSCSS_ex();
-        $typography = getTypographySCSS();
+        //$typography = getTypographySCSS();
         $defaultSCSS = getDefaultSCSS();
         $wooSCSS = getWooSCSS();
         $defaultJS = getDefaultJS();
-        file_put_contents(get_template_directory() . '/assets/styles/server/theme-settings/' . '_typography.scss', $typography);
+        //file_put_contents(get_template_directory() . '/assets/styles/server/theme-settings/' . '_typography.scss', $typography);
         file_put_contents(get_template_directory() . '/assets/styles/server/theme-settings/' . '_header.scss', $header);
         file_put_contents(get_template_directory() . '/assets/styles/server/theme-settings/' . '_footer.scss', $footer);
         file_put_contents(get_template_directory() . '/assets/styles/server/theme-settings/' . '_default.scss', $defaultSCSS);

@@ -2,3 +2,7 @@
     background: #1468a0;
     color: rgba(184, 255, 42, 0.09);
 }
+
+.acf-input .CodeMirror {
+    height: auto;
+}

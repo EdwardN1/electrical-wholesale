@@ -41,4 +41,5 @@ function tc_load_admin_script( $hook ){
             array('jquery')  //dependencies
         );
     }
+	wp_enqueue_style('admin-css', get_template_directory_uri() . '/assets/styles/admin.css', '', filemtime(get_template_directory() . '/assets/styles/admin.css'), 'all');
 }
