@@ -269,6 +269,26 @@ function list_menu($atts, $content = null) {
         'theme_location'  => ''),
         $atts));
 
+	/**
+	 *
+	 * Need to tell IDE that these variables do exist
+	 *
+	 * @var string $menu
+	 * @var string $container
+	 * @var string $container_class
+	 * @var string $container_id
+	 * @var string $menu_class
+	 * @var string $menu_id
+	 * @var string $fallback_cb
+	 * @var string $before
+	 * @var string $after
+	 * @var string $link_before
+	 * @var string $link_after
+	 * @var string $depth
+	 * @var string $walker
+	 * @var string $theme_location
+	 *
+	 */
 
     return wp_nav_menu( array(
         'menu'            => $menu,
