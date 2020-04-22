@@ -93,6 +93,19 @@ function joints_category_menu() {
     ));
 } /* End Category Menu */
 
+// The Product Category Menu
+function joints_product_category_menu() {
+	wp_nav_menu(array(
+		'container'			=> 'false',				// Remove nav container
+		'menu_id'			=> 'category-nav',		// Adding custom nav id
+		'menu_class'		=> 'menu',				// Adding custom nav class
+		'theme_location'	=> 'category-nav',		// Where it's located in the theme
+		'depth'				=> 0,					// Limit the depth of the nav
+		'fallback_cb'		=> '',					// Fallback function
+		'walker'			=> new WC_Product_Cat_List_Walker()
+	));
+} /* End Product Category Menu */
+
 // Header Fallback Menu
 function joints_main_nav_fallback() {
 	wp_page_menu( array(
