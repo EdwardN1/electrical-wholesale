@@ -273,3 +273,86 @@ function woo_cart_but_count( $fragments ) {
 
     return $fragments;
 }
+
+/**
+ * Return a list of Product Categories
+ */
+
+function get_product_categories($id='') {
+    if($id !='') {
+	    $res = '<ul id="'.$id.'" class="medium-horizontal menu dropdown" data-responsive-menu="accordion medium-dropdown" role="menubar">';
+    } else {
+	    $res = '<ul class="medium-horizontal menu dropdown" data-responsive-menu="accordion medium-dropdown" role="menubar">';
+    }
+
+	$taxonomy     = 'product_cat';
+	$orderby      = 'name';
+	$show_count   = 0;      // 1 for yes, 0 for no
+	$pad_counts   = 0;      // 1 for yes, 0 for no
+	$hierarchical = 1;      // 1 for yes, 0 for no
+	$title        = '';
+	$empty        = 0;
+
+	$args = array(
+		'taxonomy'     => $taxonomy,
+		'orderby'      => $orderby,
+		'show_count'   => $show_count,
+		'pad_counts'   => $pad_counts,
+		'hierarchical' => $hierarchical,
+		'title_li'     => $title,
+		'hide_empty'   => $empty
+	);
+	$all_categories = get_categories( $args );
+	foreach ($all_categories as $cat) {
+		if(($cat->category_parent == 0) && ($cat->count > 0)) {
+			$category_id = $cat->term_id;
+
+			$args2 = array(
+				'taxonomy'     => $taxonomy,
+				'child_of'     => 0,
+				'parent'       => $category_id,
+				'orderby'      => $orderby,
+				'show_count'   => $show_count,
+				'pad_counts'   => $pad_counts,
+				'hierarchical' => $hierarchical,
+				'title_li'     => $title,
+				'hide_empty'   => $empty
+			);
+			$sub_cats = get_categories( $args2 );
+
+			if($sub_cats) {
+				$text         = $cat->name;
+				if (str_word_count($text) > 2) {
+					$splitstring1 = substr( $text, 0, floor( strlen( $text ) / 2 ) );
+					$splitstring2 = substr( $text, floor( strlen( $text ) / 2 ) );
+
+					if ( substr( $splitstring1, 0, - 1 ) != ' ' AND substr( $splitstring2, 0, 1 ) != ' ' ) {
+						$middle = strlen( $splitstring1 ) + strpos( $splitstring2, ' ' ) + 1;
+					} else {
+						$middle = strrpos( substr( $text, 0, floor( strlen( $text ) / 2 ) ), ' ' ) + 1;
+					}
+
+					$string1  = substr( $text, 0, $middle );
+					$string2  = substr( $text, $middle );
+					$linkDesc = $string1 . '<br>' . $string2;
+				} else {
+					$linkDesc = str_replace(' ', '<br>',$text);
+                }
+				$res     .= '<li class="menu-item"><a href="' . get_term_link( $cat->slug, 'product_cat' ) . '">' . $linkDesc . '</a>';
+
+			}
+			if($sub_cats) {
+			    $res .= '<ul class="menu submenu is-dropdown-menu vertical">';
+				foreach($sub_cats as $sub_category) {
+					$res .=  '<li class="menu-item menu-item-type-taxonomy">'.'<a href="' . get_term_link( $cat->slug, 'product_cat' ) . '">'.$sub_category->name.'</a></li>' ;
+				}
+				$res .= '</ul>';
+			}
+			$res .= '</li>';
+		}
+	}
+
+	$res .= '</ul>';
+
+	return $res;
+}

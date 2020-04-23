@@ -116,6 +116,18 @@ function Generatenav($params = array())
         error_log('menu - ' . $res);
     }
 
+    //joints_product_category_menu
+
+	if ($name == 'Product Category Menu') {
+		/*ob_start();
+		joints_product_category_menu();
+		$res = ob_get_contents();
+		ob_end_clean();*/
+		$res = get_product_categories('short-product-category-menu');
+		return $res;
+		error_log('menu - ' . $res);
+	}
+
     if ($name == 'The Secondary Menu') {
         ob_start();
         joints_secondary_nav();
