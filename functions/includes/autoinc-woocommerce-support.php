@@ -268,7 +268,7 @@ function woo_cart_but_count( $fragments ) {
 
     $cart_count = WC()->cart->cart_contents_count;
 
-    $frag = '<style id="basket-cart-qty">a.icon-link-basket-pink:after {content: "'.$cart_count.'";}</style>';
+    $frag = '<style id="basket-cart-qty">a.icon-link-your-cart:after {content: "'.$cart_count.'" !important;}</style>';
     $fragments['style#basket-cart-qty'] = $frag;
 
     return $fragments;
@@ -344,7 +344,7 @@ function get_product_categories($id='') {
 			if($sub_cats) {
 			    $res .= '<ul class="menu submenu is-dropdown-menu vertical">';
 				foreach($sub_cats as $sub_category) {
-					$res .=  '<li class="menu-item menu-item-type-taxonomy">'.'<a href="' . get_term_link( $cat->slug, 'product_cat' ) . '">'.$sub_category->name.'</a></li>' ;
+					$res .=  '<li class="menu-item menu-item-type-taxonomy">'.'<a href="' . get_term_link( $sub_category->slug, 'product_cat' ) . '">'.$sub_category->name.'</a></li>' ;
 				}
 				$res .= '</ul>';
 			}

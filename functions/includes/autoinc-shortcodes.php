@@ -4,6 +4,13 @@ add_shortcode('nav', 'Generatenav');
 add_shortcode('searchform', 'Generatesearchform');
 add_shortcode('sociallink', 'Generatesociallink');
 add_shortcode('basketbutton', 'Generatebasketbutton');
+add_shortcode('cartCount', 'Generatecartcount');
+
+function Generatecartcount($params = array()) {
+    $cart_count = WC()->cart->cart_contents_count;
+
+    return '<style id="basket-cart-qty">a.icon-link-your-cart:after {content: "'.$cart_count.'" !important;}</style>';
+}
 
 function Generatebasketbutton($params = array()) {
     extract(shortcode_atts(array(
