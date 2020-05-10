@@ -145,6 +145,22 @@ function woo_new_product_tab_content()
     woocommerce_template_single_excerpt();
 }
 
+if(!function_exists('isInteger')) {
+    function isInteger($value)
+    {
+        if (!$value) {
+            return false;
+        }
+        if ($value == '') {
+            return false;
+        }
+        if (!ctype_digit($value)) {
+            return false;
+        }
+        return (int)$value;
+    }
+}
+
 add_filter('woocommerce_get_price_html', 'ts_price_html', 100, 2);
 
 function ts_price_html($price, $product)
@@ -152,11 +168,42 @@ function ts_price_html($price, $product)
     ob_start();
     $sPrice = explode('.', $price);
     ?>
-    <span class="only">Only</span>
+    <span class="only">Only </span>
     <br><?php echo $sPrice[0]; ?><span class="pence">.<?php echo $sPrice[1]; ?></span>
     <br>
     <span class="normal">VAT excluded</span>
+    <br>
+
     <?php
+    $pID = $product->get_id();
+    $epim_threshold1 = isInteger(get_post_meta($pID, 'epim_Qty_Break_1', true));
+    $epim_threshold2 = isInteger(get_post_meta($pID, 'epim_Qty_Break_2', true));
+    $epim_threshold3 = isInteger(get_post_meta($pID, 'epim_Qty_Break_3', true));
+    $epim_price1 = get_post_meta($pID, 'epim_Qty_Price_1', true);
+    $epim_price2 = get_post_meta($pID, 'epim_Qty_Price_2', true);
+    $epim_price3 = get_post_meta($pID, 'epim_Qty_Price_3', true);
+
+    if (($epim_threshold1) && ($epim_price1 > 0) && ($epim_price1 != '')) {
+        ?>
+        <br>
+        <span class="normal">Buy <?php echo $epim_threshold1; ?> for £<?php echo number_format($epim_price1,2); ?> each.</span>
+        <?php
+    }
+
+    if (($epim_threshold2) && ($epim_price2 > 0) && ($epim_price2 != '')) {
+        ?>
+        <br>
+        <span class="normal">Buy <?php echo $epim_threshold2; ?> for £<?php echo number_format($epim_price2,2); ?> each.</span>
+        <?php
+    }
+
+    if (($epim_threshold3) && ($epim_price3 > 0) && ($epim_price3 != '')) {
+        ?>
+        <br>
+        <span class="normal">Buy <?php echo $epim_threshold3; ?> for £<?php echo number_format($epim_price3,2); ?> each.</span>
+        <?php
+    }
+
     $res = ob_get_contents();
     ob_end_clean();
     return $res;
@@ -213,43 +260,43 @@ function ts_woocommerce_template_loop_product_title()
 function ts_product_subcategories($args = array())
 {
 
-        $parentid = get_queried_object_id();
-        $args = array(
-            'parent' => $parentid
-        );
+    $parentid = get_queried_object_id();
+    $args = array(
+        'parent' => $parentid
+    );
 
-        $terms = get_terms('product_cat', $args);
+    $terms = get_terms('product_cat', $args);
 
-        if ($terms) {
-            $numberCols = 4;
-            echo '<ul class="products columns-' . $numberCols . '">';
-            $colCount = 1;
-            $colClass = '';
-            foreach ($terms as $term) {
-                if (($term->name != 'Uncategorized') && ($term->count > 0)):
-                    if ($colCount == 1) {
-                        $colClass = ' first';
-                    } else {
-                        $colClass = '';
-                    }
-                    if ($colCount == $numberCols) {
-                        $colClass = ' last';
-                        $colCount = 1;
-                    } else {
-                        $colCount++;
-                    }
-                    echo '<li class="product-category product' . $colClass . '">';
-                    echo '<a href="' . esc_url(get_term_link($term)) . '" class="' . $term->slug . '">';
-                    woocommerce_subcategory_thumbnail($term);
-                    echo '<h2 class="woocommerce-loop-category__title">';
-                    echo $term->name;
-                    echo '</h2>';
-                    echo '</a>';
-                    echo '</li>';
-                endif;
-            }
-            echo '</ul>';
+    if ($terms) {
+        $numberCols = 4;
+        echo '<ul class="products columns-' . $numberCols . '">';
+        $colCount = 1;
+        $colClass = '';
+        foreach ($terms as $term) {
+            if (($term->name != 'Uncategorized') && ($term->count > 0)):
+                if ($colCount == 1) {
+                    $colClass = ' first';
+                } else {
+                    $colClass = '';
+                }
+                if ($colCount == $numberCols) {
+                    $colClass = ' last';
+                    $colCount = 1;
+                } else {
+                    $colCount++;
+                }
+                echo '<li class="product-category product' . $colClass . '">';
+                echo '<a href="' . esc_url(get_term_link($term)) . '" class="' . $term->slug . '">';
+                woocommerce_subcategory_thumbnail($term);
+                echo '<h2 class="woocommerce-loop-category__title">';
+                echo $term->name;
+                echo '</h2>';
+                echo '</a>';
+                echo '</li>';
+            endif;
         }
+        echo '</ul>';
+    }
 
 }
 
@@ -260,15 +307,15 @@ function ts_product_subcategories($args = array())
  * Add AJAX Shortcode when cart contents update
  */
 
-add_filter( 'woocommerce_add_to_cart_fragments', 'woo_cart_but_count' );
+add_filter('woocommerce_add_to_cart_fragments', 'woo_cart_but_count');
 
-function woo_cart_but_count( $fragments ) {
-
+function woo_cart_but_count($fragments)
+{
 
 
     $cart_count = WC()->cart->cart_contents_count;
 
-    $frag = '<style id="basket-cart-qty">a.icon-link-your-cart:after {content: "'.$cart_count.'" !important;}</style>';
+    $frag = '<style id="basket-cart-qty">a.icon-link-your-cart:after {content: "' . $cart_count . '" !important;}</style>';
     $fragments['style#basket-cart-qty'] = $frag;
 
     return $fragments;
@@ -278,81 +325,82 @@ function woo_cart_but_count( $fragments ) {
  * Return a list of Product Categories
  */
 
-function get_product_categories($id='') {
-    if($id !='') {
-	    $res = '<ul id="'.$id.'" class="medium-horizontal menu dropdown" data-responsive-menu="accordion medium-dropdown" role="menubar">';
+function get_product_categories($id = '')
+{
+    if ($id != '') {
+        $res = '<ul id="' . $id . '" class="medium-horizontal menu dropdown" data-responsive-menu="accordion medium-dropdown" role="menubar">';
     } else {
-	    $res = '<ul class="medium-horizontal menu dropdown" data-responsive-menu="accordion medium-dropdown" role="menubar">';
+        $res = '<ul class="medium-horizontal menu dropdown" data-responsive-menu="accordion medium-dropdown" role="menubar">';
     }
 
-	$taxonomy     = 'product_cat';
-	$orderby      = 'name';
-	$show_count   = 0;      // 1 for yes, 0 for no
-	$pad_counts   = 0;      // 1 for yes, 0 for no
-	$hierarchical = 1;      // 1 for yes, 0 for no
-	$title        = '';
-	$empty        = 0;
+    $taxonomy = 'product_cat';
+    $orderby = 'name';
+    $show_count = 0;      // 1 for yes, 0 for no
+    $pad_counts = 0;      // 1 for yes, 0 for no
+    $hierarchical = 1;      // 1 for yes, 0 for no
+    $title = '';
+    $empty = 0;
 
-	$args = array(
-		'taxonomy'     => $taxonomy,
-		'orderby'      => $orderby,
-		'show_count'   => $show_count,
-		'pad_counts'   => $pad_counts,
-		'hierarchical' => $hierarchical,
-		'title_li'     => $title,
-		'hide_empty'   => $empty
-	);
-	$all_categories = get_categories( $args );
-	foreach ($all_categories as $cat) {
-		if(($cat->category_parent == 0) && ($cat->count > 0)) {
-			$category_id = $cat->term_id;
+    $args = array(
+        'taxonomy' => $taxonomy,
+        'orderby' => $orderby,
+        'show_count' => $show_count,
+        'pad_counts' => $pad_counts,
+        'hierarchical' => $hierarchical,
+        'title_li' => $title,
+        'hide_empty' => $empty
+    );
+    $all_categories = get_categories($args);
+    foreach ($all_categories as $cat) {
+        if (($cat->category_parent == 0) && ($cat->count > 0)) {
+            $category_id = $cat->term_id;
 
-			$args2 = array(
-				'taxonomy'     => $taxonomy,
-				'child_of'     => 0,
-				'parent'       => $category_id,
-				'orderby'      => $orderby,
-				'show_count'   => $show_count,
-				'pad_counts'   => $pad_counts,
-				'hierarchical' => $hierarchical,
-				'title_li'     => $title,
-				'hide_empty'   => $empty
-			);
-			$sub_cats = get_categories( $args2 );
+            $args2 = array(
+                'taxonomy' => $taxonomy,
+                'child_of' => 0,
+                'parent' => $category_id,
+                'orderby' => $orderby,
+                'show_count' => $show_count,
+                'pad_counts' => $pad_counts,
+                'hierarchical' => $hierarchical,
+                'title_li' => $title,
+                'hide_empty' => $empty
+            );
+            $sub_cats = get_categories($args2);
 
-			if($sub_cats) {
-				$text         = $cat->name;
-				if (str_word_count($text) > 2) {
-					$splitstring1 = substr( $text, 0, floor( strlen( $text ) / 2 ) );
-					$splitstring2 = substr( $text, floor( strlen( $text ) / 2 ) );
+            if ($sub_cats) {
+                $text = $cat->name;
+                if (str_word_count($text) > 2) {
+                    $splitstring1 = substr($text, 0, floor(strlen($text) / 2));
+                    $splitstring2 = substr($text, floor(strlen($text) / 2));
 
-					if ( substr( $splitstring1, 0, - 1 ) != ' ' AND substr( $splitstring2, 0, 1 ) != ' ' ) {
-						$middle = strlen( $splitstring1 ) + strpos( $splitstring2, ' ' ) + 1;
-					} else {
-						$middle = strrpos( substr( $text, 0, floor( strlen( $text ) / 2 ) ), ' ' ) + 1;
-					}
+                    if (substr($splitstring1, 0, -1) != ' ' and substr($splitstring2, 0, 1) != ' ') {
+                        $middle = strlen($splitstring1) + strpos($splitstring2, ' ') + 1;
+                    } else {
+                        $middle = strrpos(substr($text, 0, floor(strlen($text) / 2)), ' ') + 1;
+                    }
 
-					$string1  = substr( $text, 0, $middle );
-					$string2  = substr( $text, $middle );
-					$linkDesc = $string1 . '<br>' . $string2;
-				} else {
-					$linkDesc = str_replace(' ', '<br>',$text);
+                    $string1 = substr($text, 0, $middle);
+                    $string2 = substr($text, $middle);
+                    $linkDesc = $string1 . '<br>' . $string2;
+                } else {
+                    $linkDesc = str_replace(' ', '<br>', $text);
                 }
-				$res     .= '<li class="menu-item"><a href="' . get_term_link( $cat->slug, 'product_cat' ) . '">' . $linkDesc . '</a>';
+                $res .= '<li class="menu-item"><a href="' . get_term_link($cat->slug, 'product_cat') . '">' . $linkDesc . '</a>';
 
-			}
-			if($sub_cats) {
-			    $res .= '<ul class="menu submenu is-dropdown-menu vertical">';
-				foreach($sub_cats as $sub_category) {
-					$res .=  '<li class="menu-item menu-item-type-taxonomy">'.'<a href="' . get_term_link( $sub_category->slug, 'product_cat' ) . '">'.$sub_category->name.'</a></li>' ;
-				}
-				$res .= '</ul>';
-			}
-			$res .= '</li>';
-		}
-	}
+            }
+            if ($sub_cats) {
+                $res .= '<ul class="menu submenu is-dropdown-menu vertical">';
+                foreach ($sub_cats as $sub_category) {
+                    $res .= '<li class="menu-item menu-item-type-taxonomy">' . '<a href="' . get_term_link($sub_category->slug, 'product_cat') . '">' . $sub_category->name . '</a></li>';
+                }
+                $res .= '</ul>';
+            }
+            $res .= '</li>';
+        }
+    }
 
-	$res .= '</ul>';
+    $res .= '</ul>';
 
-	return $res;
+    return $res;
 }
