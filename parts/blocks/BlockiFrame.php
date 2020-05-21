@@ -41,7 +41,7 @@ if (!empty($block['align'])) {
             <?php $name = get_sub_field('name'); ?>
             <?php $value = get_sub_field('value'); ?>
             <?php if ($value == ''): ?>
-                <?php $attr .= $name.' '?>
+                <?php $attr .= $name . ' ' ?>
             <?php else : ?>
                 <?php $attr .= $name . '="' . $value . '" ' ?>
             <?php endif; ?>
@@ -49,8 +49,10 @@ if (!empty($block['align'])) {
     <?php else : ?>
         <?php // no rows found ?>
     <?php endif; ?>
-    <div class="tch-iframe <?php the_field('css_class'); ?>">
-        <iframe src="<?php the_field('src'); ?>"<?php echo $attr; ?>></iframe>
+    <div class="grid-x">
+        <div class="tch-iframe <?php the_field('css_class'); ?>">
+            <iframe src="<?php the_field('src'); ?>"<?php echo $attr; ?>></iframe>
+        </div>
     </div>
 
 
