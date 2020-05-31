@@ -6,3 +6,7 @@
 .acf-input .CodeMirror {
     height: auto;
 }
+
+.wp-block {
+    max-width: 98%;
+}

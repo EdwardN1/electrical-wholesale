@@ -11,9 +11,9 @@
 	</header>--> <!-- end article header -->
 
     <section class="entry-content" itemprop="text">
-        <div class="grid-container">
+
             <?php the_content(); ?>
-        </div>
+
     </section> <!-- end article section -->
 
     <section class="acf-content-loop">

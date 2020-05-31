@@ -29,7 +29,19 @@ jQuery(document).ready(function ($) {
         if(slickOpts) {
             $(this).slick(slickOpts);
         } else {
-            $(this).slick();
+            let thisDots = $(this).data('dots');
+            let thisArrows = $(this).data('arrows');
+            let simpleOpts = {
+                dots: false,
+                arrows: false
+            };
+            if(thisDots==true) {
+                simpleOpts.dots = true;
+            }
+            if(thisArrows==true) {
+                simpleOpts.arrows = true;
+            }
+            $(this).slick(simpleOpts);
         }
     });
 
