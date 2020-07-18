@@ -7,6 +7,9 @@ function newsletter_form( $params = array() ) {
 		'buttontext' => 'SIGN UP',
 	), $params ) );
 
+	wp_enqueue_script('newsform-script');
+    wp_enqueue_script('google-recapture-api');
+
 	/**
 	 *
 	 * Need to tell IDE that these variables do exist
@@ -26,8 +29,8 @@ function newsletter_form( $params = array() ) {
 	return $res;
 }
 
-wp_enqueue_script( 'newsform-script', get_template_directory_uri() . '/assets/scripts/newsform.js', array( 'jquery' ), null, true );
-wp_enqueue_script( 'google-recapture-api','https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit', array('newsform-script'), null, true );
+wp_register_script( 'newsform-script', get_template_directory_uri() . '/assets/scripts/newsform.js', array( 'jquery' ), null, true );
+wp_register_script( 'google-recapture-api','https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit', array('newsform-script'), null, true );
 
 // set variables for script
 wp_localize_script( 'newsform-script', 'newsform_settings', array(

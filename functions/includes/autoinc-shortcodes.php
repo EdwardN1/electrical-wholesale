@@ -163,6 +163,20 @@ function Generatenav($params = array())
         ob_end_clean();
     }
 
+    if ($name == 'Footer Menu 1') {
+        ob_start();
+        joints_footer_nav_1_menu();
+        $res = ob_get_contents();
+        ob_end_clean();
+    }
+
+    if ($name == 'Footer Menu 2') {
+        ob_start();
+        joints_footer_nav_2_menu();
+        $res = ob_get_contents();
+        ob_end_clean();
+    }
+
     return $res;
 }
 

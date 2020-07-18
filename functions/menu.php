@@ -5,8 +5,8 @@ register_nav_menus(
 		'main-nav'		=> __( 'The Main Menu', 'jointswp' ),		// Main nav in header
         'secondary-nav'		=> __( 'The Secondary Menu', 'jointswp' ),		// Main nav in header
 		'offcanvas-nav'	=> __( 'The Off-Canvas Menu (Mobile)', 'jointswp' ),	// Off-Canvas nav
-        'category-nav'	=> __( 'Category Menu', 'jointswp' ),			// Secondary nav in footer
-		'links-nav'	=> __( 'Links Menu', 'jointswp' ),			// Secondary nav in footer
+        'footer-nav-1'	=> __( 'Footer Menu 1', 'jointswp' ),			// Secondary nav in footer
+		'footer-nav-2'	=> __( 'Footer Menu 2', 'jointswp' ),			// Secondary nav in footer
 	)
 );
 
@@ -67,31 +67,31 @@ class Off_Canvas_Menu_Walker extends Walker_Nav_Menu {
 	}
 }
 
-// The Links Menu
-function joints_links_menu() {
+// The Footer Menu 1
+function joints_footer_nav_1_menu() {
 	wp_nav_menu(array(
 		'container'			=> 'false',				// Remove nav container
-		'menu_id'			=> 'links-nav',		// Adding custom nav id
+		'menu_id'			=> 'footer-nav-1',		// Adding custom nav id
 		'menu_class'		=> 'menu',				// Adding custom nav class
-		'theme_location'	=> 'links-nav',		// Where it's located in the theme
+		'theme_location'	=> 'footer-nav-1',		// Where it's located in the theme
 		'depth'				=> 0,					// Limit the depth of the nav
 		'fallback_cb'		=> '',					// Fallback function
         'walker'			=> new Off_Canvas_Menu_Walker()
 	));
-} /* End Links Menu */
+} /* End The Footer Menu 1 */
 
-// The Category Menu
-function joints_category_menu() {
+// The The Footer Menu 2
+function joints_footer_nav_2_menu() {
     wp_nav_menu(array(
         'container'			=> 'false',				// Remove nav container
-        'menu_id'			=> 'category-nav',		// Adding custom nav id
+        'menu_id'			=> 'footer-nav-2',		// Adding custom nav id
         'menu_class'		=> 'menu',				// Adding custom nav class
-        'theme_location'	=> 'category-nav',		// Where it's located in the theme
+        'theme_location'	=> 'footer-nav-2',		// Where it's located in the theme
         'depth'				=> 0,					// Limit the depth of the nav
         'fallback_cb'		=> '',					// Fallback function
         'walker'			=> new Off_Canvas_Menu_Walker()
     ));
-} /* End Category Menu */
+} /* End The Footer Menu 2 */
 
 // The Product Category Menu
 function joints_product_category_menu() {
