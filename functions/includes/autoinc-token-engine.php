@@ -4,6 +4,9 @@ function tokens($text)
     $html = $text;
     $tokens = array();
     preg_match_all('/<token\s*([^>]*)\s*\/?>/', $html, $tokens, PREG_SET_ORDER);
+    if(empty($tokens)){
+        return $html;
+    }
     foreach ($tokens as $customTag) {
         $originalTag = $customTag[0];
         $rawAttributes = $customTag[1];
@@ -22,7 +25,7 @@ function tokens($text)
         $replaceWith = '';
 
         $class = '';
-        if ($formatedAttributes['class']) {
+        if (isset($formatedAttributes['class'])) {
             $class = ' class="' . $formatedAttributes['class'] . '"';
         }
 

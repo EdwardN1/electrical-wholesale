@@ -29,14 +29,21 @@ function newsletter_form( $params = array() ) {
 	return $res;
 }
 
-wp_register_script( 'newsform-script', get_template_directory_uri() . '/assets/scripts/newsform.js', array( 'jquery' ), null, true );
-wp_register_script( 'google-recapture-api','https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit', array('newsform-script'), null, true );
+
+add_action('wp_enqueue_scripts', 'newsletter_site_scripts');
+
+function newsletter_site_scripts() {
+    wp_register_script( 'newsform-script', get_template_directory_uri() . '/assets/scripts/newsform.js', array( 'jquery' ), null, true );
+    wp_register_script( 'google-recapture-api','https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit', array('newsform-script'), null, true );
 
 // set variables for script
-wp_localize_script( 'newsform-script', 'newsform_settings', array(
-	'ajaxurl'    => admin_url( 'admin-ajax.php' ),
-	'security'  => wp_create_nonce( 'newsform-security-nonce' )
-) );
+    wp_localize_script( 'newsform-script', 'newsform_settings', array(
+        'ajaxurl'    => admin_url( 'admin-ajax.php' ),
+        'security'  => wp_create_nonce( 'newsform-security-nonce' )
+    ) );
+}
+
+
 
 add_action( 'wp_ajax_nopriv_newsform_address_submit', 'newsform_address_submit' );
 add_action( 'wp_ajax_newsform_address_submit', 'newsform_address_submit' );
