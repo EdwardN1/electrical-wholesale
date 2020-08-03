@@ -6,7 +6,7 @@ function bbloomer_add_css_to_emails( $css, $email ) {
     $css .= '
       h2 { color: '.$secondary_color.'; }
       h3 { color: '.$secondary_color.'; }
-      #template_header {background-color:'.$primary_color.' 1important;}
+      th {background-color:'.$primary_color.';}
    ';
     return $css;
 }
