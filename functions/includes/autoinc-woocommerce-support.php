@@ -351,9 +351,16 @@ function get_product_categories($id = '')
         'hide_empty' => $empty
     );
     $all_categories = get_categories($args);
+    $current_category = get_queried_object();
+    $current_cat_id = $current_category->term_id;
+    //error_log('current category id = '.$current_cat_id);
     foreach ($all_categories as $cat) {
         if (($cat->category_parent == 0) && ($cat->count > 0)) {
             $category_id = $cat->term_id;
+            $top_active_class = '';
+            if($current_cat_id==$category_id) {
+                $top_active_class=' active';
+            }
 
             $args2 = array(
                 'taxonomy' => $taxonomy,
@@ -386,13 +393,19 @@ function get_product_categories($id = '')
                 } else {
                     $linkDesc = str_replace(' ', '<br>', $text);
                 }
-                $res .= '<li class="menu-item"><a href="' . get_term_link($cat->slug, 'product_cat') . '">' . $linkDesc . '</a>';
+                $res .= '<li class="menu-item'.$top_active_class.'"><a href="' . get_term_link($cat->slug, 'product_cat') . '">' . $linkDesc . '</a>';
+                $top_active_class = '';
 
             }
             if ($sub_cats) {
                 $res .= '<ul class="menu submenu is-dropdown-menu vertical">';
                 foreach ($sub_cats as $sub_category) {
-                    $res .= '<li class="menu-item menu-item-type-taxonomy">' . '<a href="' . get_term_link($sub_category->slug, 'product_cat') . '">' . $sub_category->name . '</a></li>';
+                    $sub_category_id = $sub_category->term_id;
+                    if($sub_category_id==$current_cat_id) {
+                        $top_active_class=' active';
+                    }
+                    $res .= '<li class="menu-item menu-item-type-taxonomy'.$top_active_class.'">' . '<a href="' . get_term_link($sub_category->slug, 'product_cat') . '">' . $sub_category->name . '</a></li>';
+                    $top_active_class='';
                 }
                 $res .= '</ul>';
             }

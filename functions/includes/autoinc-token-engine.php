@@ -4,7 +4,7 @@ function tokens($text)
     $html = $text;
     $tokens = array();
     preg_match_all('/<token\s*([^>]*)\s*\/?>/', $html, $tokens, PREG_SET_ORDER);
-    if(empty($tokens)){
+    if (empty($tokens)) {
         return $html;
     }
     foreach ($tokens as $customTag) {
@@ -27,6 +27,28 @@ function tokens($text)
         $class = '';
         if (isset($formatedAttributes['class'])) {
             $class = ' class="' . $formatedAttributes['class'] . '"';
+        }
+
+        if ($formatedAttributes['type'] == 'product') {
+            $tokenName = $formatedAttributes['name'];
+            if (have_rows('link_tokens')) :
+                while (have_rows('link_tokens')) : the_row();
+                    if (get_sub_field('name') == $tokenName) {
+                        if($replaceWith=='') {
+                            $postObj = get_sub_field('product');
+                            $productObj = wc_get_product($postObj->ID);
+                            $product_image = wp_get_attachment_url( $productObj->get_image_id());
+                            $product_title = $productObj->get_title();
+                            $product_price = '£'.$productObj->get_price();
+                            $replaceWith = '<div class="product-cell"><a href="'.$productObj->get_permalink().'">';
+                            $replaceWith .= '<div class="product-image"><img src="'.$product_image.'"></div>';
+                            $replaceWith .= '<div class="product-title">'.$product_title.'</div>';
+                            $replaceWith .= '<div class="product-price">'.$product_price.'</div>';
+                            $replaceWith .= '</a></div>';
+                        }
+                    }
+                endwhile;
+            endif;
         }
 
         if ($formatedAttributes['type'] == 'link') {
