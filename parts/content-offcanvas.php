@@ -7,12 +7,14 @@
 ?>
 
 <div class="off-canvas position-right" id="off-canvas" data-off-canvas>
-	<?php joints_off_canvas_nav(); ?>
+    <?php joints_off_canvas_nav(); ?>
 
-	<?php if ( is_active_sidebar( 'offcanvas' ) ) : ?>
+    <?php echo get_product_categories('off-canvas'); ?>
 
-		<?php dynamic_sidebar( 'offcanvas' ); ?>
-
-	<?php endif; ?>
+    <?php if (is_active_sidebar('offcanvas')) : ?>
+        <div style="padding-left: 1em; padding-right: 1em;">
+            <?php dynamic_sidebar('offcanvas'); ?>
+        </div>
+    <?php endif; ?>
 
 </div>

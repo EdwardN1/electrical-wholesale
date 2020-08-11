@@ -327,10 +327,15 @@ function woo_cart_but_count($fragments)
 
 function get_product_categories($id = '')
 {
-    if ($id != '') {
+    if ($id == 'short-product-category-menu') {
         $res = '<ul id="' . $id . '" class="medium-horizontal menu dropdown" data-responsive-menu="accordion medium-dropdown" role="menubar">';
     } else {
-        $res = '<ul class="medium-horizontal menu dropdown" data-responsive-menu="accordion medium-dropdown" role="menubar">';
+        if($id=='off-canvas') {
+            $res = '<ul class="vertical menu accordion-menu" data-accordion-menu data-submenu-toggle="true" role="menubar" style="width: 100%">';
+        } else {
+            $res = '<ul class="medium-horizontal menu dropdown" data-responsive-menu="accordion medium-dropdown" role="menubar">';
+        }
+
     }
 
     $taxonomy = 'product_cat';
