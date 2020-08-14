@@ -6,6 +6,8 @@
 
 <div id="sidebar1" class="sidebar small-12 medium-4 large-4 cell" role="complementary">
 
+    <div><a href="/shop/" class="button" style="display: inline-block !important; width: 100%;">Reset Product Filters</a> </div>
+
 	<?php if ( is_active_sidebar( 'sidebar1' ) ) : ?>
 
 		<?php dynamic_sidebar( 'sidebar1' ); ?>
