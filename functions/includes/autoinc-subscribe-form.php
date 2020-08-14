@@ -40,7 +40,7 @@ function newsletter_site_scripts() {
     wp_localize_script( 'newsform-script', 'newsform_settings', array(
         'ajaxurl'    => admin_url( 'admin-ajax.php' ),
         'security'  => wp_create_nonce( 'newsform-security-nonce' )
-    ) );    
+    ) );
 }
 
 
