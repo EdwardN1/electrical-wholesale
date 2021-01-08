@@ -34,6 +34,12 @@ if (!empty($product_tabs)) : ?>
         <ul class="accordion" data-accordion>
             <?php $isActive = ' is-active'; ?>
             <?php foreach ($product_tabs as $key => $product_tab) : ?>
+                <?php if (get_field('exclude_product_description_tab', 'option') == 1) :
+                    if($product_tab['title']=='Description') continue;
+                endif; ?>
+                <?php if (get_field('exclude_product_details_tab', 'option') == 1) :
+                    if($product_tab['title']=='Product Details') continue;
+                endif; ?>
                 <li class="accordion-item<?php echo $isActive; ?>" data-accordion-item>
                     <?php $isActive = ''; ?>
                     <a href="#" class="accordion-title"><?php echo wp_kses_post(apply_filters('woocommerce_product_' . $key . '_tab_title', $product_tab['title'], $key)); ?></a>
