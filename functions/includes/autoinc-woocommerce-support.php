@@ -242,10 +242,10 @@ add_action('woocommerce_shop_loop_item_title', 'ts_woocommerce_template_loop_pro
 function ts_woocommerce_template_loop_product_title()
 {
     $title = get_the_title();
-    if (str_word_count($title, 0) > 5) {
+    if (str_word_count($title, 0) > 8) {
         $words = str_word_count($title, 2);
         $pos = array_keys($words);
-        $title = substr($title, 0, $pos[5]) . '...';
+        $title = substr($title, 0, $pos[8]) . '...';
     }
 
     echo '<h2 class="' . esc_attr(apply_filters('woocommerce_product_loop_title_classes', 'woocommerce-loop-product__title')) . '">' . $title . '</h2>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
