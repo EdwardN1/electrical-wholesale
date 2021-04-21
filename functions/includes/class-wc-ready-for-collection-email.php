@@ -16,6 +16,7 @@ class WC_Ready_For_Collection_Email extends WC_Email {
      */
     public function __construct() {
 
+        error_log('Construction');
         // set ID, this simply needs to be a unique name
         $this->id = 'wc_ready_for_collection';
 
@@ -42,11 +43,11 @@ class WC_Ready_For_Collection_Email extends WC_Email {
 
         // this sets the recipient to the settings defined below in init_form_fields()
         //$this->recipient = $this->get_option( 'recipient' );
-        $this->recipient = 'Customer';
+        //$this->recipient = 'Customer';
 
         // if none was entered, just use the WP admin email as a fallback
-        if ( ! $this->recipient )
-            $this->recipient = get_option( 'admin_email' );
+        /*if ( ! $this->recipient )
+            $this->recipient = get_option( 'admin_email' );*/
     }
 
     /**
@@ -74,6 +75,8 @@ class WC_Ready_For_Collection_Email extends WC_Email {
 
         $this->find[] = '{order_number}';
         $this->replace[] = $this->object->get_order_number();
+
+        $this->recipient = $this->object->get_billing_email();
 
         if ( ! $this->is_enabled() || ! $this->get_recipient() )
             return;

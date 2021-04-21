@@ -33,10 +33,10 @@ function custom_email_actions( $action ) {
     return $actions;
 }
 
-add_action( 'woocommerce_order_status_wc-ready-for-collection', array( WC(), 'send_transactional_email' ), 10, 1 );
+//add_action( 'woocommerce_order_status_wc-ready-for-collection', array( WC(), 'send_transactional_email' ), 10, 1 );
 
 // Sending an email notification when order get 'ready-for-collection' status
-add_action('woocommerce_order_status_ready-for-collection', 'backorder_status_custom_notification', 20, 2);
+//add_action('woocommerce_order_status_ready-for-collection', 'backorder_status_custom_notification', 20, 2);
 function backorder_status_custom_notification( $order_id, $order ) {
     // HERE below your settings
     $heading   = __('Your order is Ready for Collection','woocommerce');
@@ -72,5 +72,5 @@ function add_ready_for_collection_woocommerce_email( $email_classes ) {
     return $email_classes;
 
 }
-add_filter( 'woocommerce_email_classes', 'add_ready_for_collection_woocommerce_email' );
+//add_filter( 'woocommerce_email_classes', 'add_ready_for_collection_woocommerce_email' );
 
