@@ -2,87 +2,98 @@
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
 /**
- * A custom Ready For Collection WooCommerce Email class
+ *  Order Ready for Collection Email
  *
- * @since 0.1
- * @extends \WC_Email
+ * An email sent to the admin when a new order is received/paid for.
+ *
+ * @class 		WC_Email_Order_Ready_For_Collection
+ * @version		2.0.0
+ * @package		WooCommerce/Classes/Emails
+ * @author 		WooThemes
+ * @extends 	WC_Email
  */
-class WC_Ready_For_Collection_Email extends WC_Email {
+class WC_Email_Order_Ready_For_Collection extends WC_Email {
 
     /**
-     * Set email defaults
-     *
-     * @since 0.1
+     * Constructor
      */
-    public function __construct() {
+    function __construct() {
 
-        error_log('Construction');
-        // set ID, this simply needs to be a unique name
-        $this->id = 'wc_ready_for_collection';
+        $this->id 				= 'customer_order_ready_for_collection';
+        $this->title 			= __( 'Order ready for collection', 'woocommerce' );
+        $this->description		= __( 'This is an order notification sent to the customer the order is ready for collection.', 'woocommerce' );
 
-        // this is the title in WooCommerce Email settings
-        $this->title = 'Ready for Collection';
+        $this->heading 			= __( 'Your order is ready for collection', 'woocommerce' );
+        $this->subject      	= __( 'Your {blogname} order placed on {order_date} is now ready for collection', 'woocommerce' );
 
-        // this is the description in WooCommerce email settings
-        $this->description = 'Ready for Collection Notification emails are sent when an order status is set to Ready for Collection';
+        $this->template_html 	= 'emails/customer-order-ready-for-collection.php';
+        $this->template_plain 	= 'emails/plain/customer-order-ready-for-collection.php';
 
-        // these are the default heading and subject lines that can be overridden using the settings
-        $this->heading = 'Your order is ready for collection';
-        $this->subject = 'Your order is ready for collection';
+        // Triggers for this email
+        add_action( 'woocommerce_order_status_processing_to_ready_for_collection_notification', array( $this, 'trigger' ) );
+        //add_action( 'woocommerce_order_status_pending_to_on-hold_notification', array( $this, 'trigger' ) );
 
-        // these define the locations of the templates that this email should use, we'll just use the new order template since this email is similar
-        $this->template_html  = 'emails/customer-processing-order.php';
-        $this->template_plain = 'emails/plain/customer-processing-order.php';
-
-        // Trigger on new paid orders
-        //add_action( 'woocommerce_order_status_pending_to_processing_notification', array( $this, 'trigger' ) );
-        //add_action( 'woocommerce_order_status_failed_to_processing_notification',  array( $this, 'trigger' ) );
-
-        // Call parent constructor to load any other defaults not explicity defined here
+        // Call parent constructor
         parent::__construct();
-
-        // this sets the recipient to the settings defined below in init_form_fields()
-        //$this->recipient = $this->get_option( 'recipient' );
-        //$this->recipient = 'Customer';
-
-        // if none was entered, just use the WP admin email as a fallback
-        /*if ( ! $this->recipient )
-            $this->recipient = get_option( 'admin_email' );*/
     }
 
     /**
-     * Determine if the email should actually be sent and setup email merge variables
+     * trigger function.
      *
-     * @since 0.1
-     * @param int $order_id
+     * @access public
+     * @return void
      */
-    public function trigger( $order_id ) {
+    function trigger( $order_id ) {
+        global $woocommerce;
 
-        // bail if no order ID is present
-        if ( ! $order_id )
-            return;
+        if ( $order_id ) {
+            $this->object 		= new WC_Order( $order_id );
+            $this->recipient	= $this->object->billing_email;
 
-        // setup order object
-        $this->object = new WC_Order( $order_id );
+            $this->find[] = '{order_date}';
+            $this->replace[] = date_i18n( woocommerce_date_format(), strtotime( $this->object->order_date ) );
 
-        // bail if shipping method is not expedited
-        //if ( ! in_array( $this->object->get_shipping_method(), array( 'Three Day Shipping', 'Next Day Shipping' ) ) )
-          //  return;
-
-        // replace variables in the subject/headings
-        $this->find[] = '{order_date}';
-        $this->replace[] = date_i18n( woocommerce_date_format(), strtotime( $this->object->order_date ) );
-
-        $this->find[] = '{order_number}';
-        $this->replace[] = $this->object->get_order_number();
-
-        $this->recipient = $this->object->get_billing_email();
+            $this->find[] = '{order_number}';
+            $this->replace[] = $this->object->get_order_number();
+        }
 
         if ( ! $this->is_enabled() || ! $this->get_recipient() )
             return;
 
-        // woohoo, send the email!
         $this->send( $this->get_recipient(), $this->get_subject(), $this->get_content(), $this->get_headers(), $this->get_attachments() );
+        //twilio_sms_notifications_woocommerce_send_customer_order_notification($order_id);
+        //for customers we need to do some logic to make sure the phone number is twilio friendly
+        $goodPhoneNumber = twilio_sms_notifications_woocommerce_make_number_sendable($this->object->get_billing_phone(),$order_id);
+        twilio_sms_notifications_woocommerce_send_sms($goodPhoneNumber,'Your '.get_bloginfo(). ' order placed on '.date_format($this->object->get_date_created(), 'd/m/Y').' is ready for collection.');
     }
 
-} // end \WC_Expedited_Order_Email class
+    /**
+     * get_content_html function.
+     *
+     * @access public
+     * @return string
+     */
+    function get_content_html() {
+        ob_start();
+        woocommerce_get_template( $this->template_html, array(
+            'order' 		=> $this->object,
+            'email_heading' => $this->get_heading()
+        ) );
+        return ob_get_clean();
+    }
+
+    /**
+     * get_content_plain function.
+     *
+     * @access public
+     * @return string
+     */
+    function get_content_plain() {
+        ob_start();
+        woocommerce_get_template( $this->template_plain, array(
+            'order' 		=> $this->object,
+            'email_heading' => $this->get_heading()
+        ) );
+        return ob_get_clean();
+    }
+}

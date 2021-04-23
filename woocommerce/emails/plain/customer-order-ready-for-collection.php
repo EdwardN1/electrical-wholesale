@@ -24,7 +24,7 @@ echo "\n=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=\n\n";
 /* translators: %s: Customer first name */
 echo sprintf( esc_html__( 'Hi %s,', 'woocommerce' ), esc_html( $order->get_billing_first_name() ) ) . "\n\n";
 /* translators: %s: Order number */
-echo sprintf( esc_html__( 'Just to let you know &mdash; we\'ve processed your order #%s, and it is now ready for collection:', 'woocommerce' ), esc_html( $order->get_order_number() ) ) . "\n\n";
+echo sprintf( esc_html__( 'Just to let you know &mdash; we\'ve received your order #%s, and it is now being processed:', 'woocommerce' ), esc_html( $order->get_order_number() ) ) . "\n\n";
 
 /*
  * @hooked WC_Emails::order_details() Shows the order details table.
