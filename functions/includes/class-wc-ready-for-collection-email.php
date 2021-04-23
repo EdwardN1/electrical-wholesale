@@ -63,8 +63,10 @@ class WC_Email_Order_Ready_For_Collection extends WC_Email {
         $this->send( $this->get_recipient(), $this->get_subject(), $this->get_content(), $this->get_headers(), $this->get_attachments() );
         //twilio_sms_notifications_woocommerce_send_customer_order_notification($order_id);
         //for customers we need to do some logic to make sure the phone number is twilio friendly
-        $goodPhoneNumber = twilio_sms_notifications_woocommerce_make_number_sendable($this->object->get_billing_phone(),$order_id);
-        twilio_sms_notifications_woocommerce_send_sms($goodPhoneNumber,'Your '.get_bloginfo(). ' order placed on '.date_format($this->object->get_date_created(), 'd/m/Y').' is ready for collection.');
+        if(function_exists('twilio_sms_notifications_woocommerce_make_number_sendable')) {
+            $goodPhoneNumber = twilio_sms_notifications_woocommerce_make_number_sendable($this->object->get_billing_phone(), $order_id);
+            twilio_sms_notifications_woocommerce_send_sms($goodPhoneNumber, 'Your ' . get_bloginfo() . ' order placed on ' . date_format($this->object->get_date_created(), 'd/m/Y') . ' is ready for collection.');
+        }
     }
 
     /**
