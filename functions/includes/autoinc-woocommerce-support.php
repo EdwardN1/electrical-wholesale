@@ -170,9 +170,7 @@ function ts_price_html($price, $product)
     ?>
     <span class="only">Only </span>
     <br><?php echo $sPrice[0]; ?><span class="pence">.<?php echo $sPrice[1]; ?></span>
-    <br>
-    <span class="normal">VAT excluded</span>
-    <br>
+    <span class="normal" style="width: 100%; text-align: center; display: block">VAT excluded</span>
 
     <?php
     $pID = $product->get_id();
