@@ -41,8 +41,8 @@ function rfc_custom_dropdown_bulk_actions_shop_order($actions)
 add_filter('woocommerce_email_actions', 'rfc_custom_email_actions', 20, 1);
 function rfc_custom_email_actions($action)
 {
-    $actions[] = 'woocommerce_order_status_wc-r-f-c';
-    return $actions;
+    $action[] = 'woocommerce_order_status_wc-r-f-c';
+    return $action;
 }
 
 add_action('woocommerce_order_status_wc-r-f-c', array(WC(), 'send_transactional_email'), 10, 1);
@@ -52,6 +52,7 @@ add_action('woocommerce_order_status_r-f-c', 'rfc_backorder_status_custom_notifi
 function rfc_backorder_status_custom_notification($order_id, $order)
 {
     // HERE below your settings
+    //error_log('rfc_backorder_status_custom_notification');
     $heading = __('Your order is ready for collection ', 'woocommerce');
     $subject = '[{site_title}] order ({order_number}) - {order_date} is ready for collection';
 
