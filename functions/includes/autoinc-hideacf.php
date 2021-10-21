@@ -24,7 +24,7 @@ function isDeveloper() {
     get_currentuserinfo();
     $ret = true;
     $email = (string) $current_user->user_email;
-    if(($email != 'edward@technicks.com')||($email != 'edward@ng15.co.uk')) {
+    if(($email != 'edward@technicks.com')) {
         $ret = false;
     }
     return $ret;
